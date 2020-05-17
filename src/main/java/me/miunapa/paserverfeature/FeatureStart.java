@@ -24,6 +24,7 @@ public class FeatureStart {
         new Rule();
         new Suicide();
         new LockChange();
+        new Invisible();
         // entity
         new EntitySpawn();
         new EntityBreed();
