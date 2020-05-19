@@ -1,6 +1,6 @@
 main: me.miunapa.paserverfeature.PAServerFeature
 name: PAServerFeature
-version: 0.7.17
+version: 0.7.18
 api-version: 1.15
 #depend: [NBTAPI]
 
