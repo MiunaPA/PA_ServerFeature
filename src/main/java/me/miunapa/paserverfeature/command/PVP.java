@@ -45,7 +45,7 @@ public class PVP extends FeatureStart implements Listener, CommandExecutor {
             Player player = (Player) sender;
             String playerUUID = player.getUniqueId().toString();
             if (args.length != 0) {
-                if (!pvp.getBoolean(playerUUID)) {
+                if (pvp.getBoolean(playerUUID)) {
                     player.sendMessage(ChatColor.GREEN + "你目前的PVP是開的!");
                 } else {
                     player.sendMessage(ChatColor.RED + "你目前的PVP是關的!");
