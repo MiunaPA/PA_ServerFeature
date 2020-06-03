@@ -34,6 +34,7 @@ public class FeatureStart {
         new ItemSign();
         new NewPlayer();
         new PlayerLimitBypass();
+        new Dispense();
         // player
         new PlayerDeath();
     }
