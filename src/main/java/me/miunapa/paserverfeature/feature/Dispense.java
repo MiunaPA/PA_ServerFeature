@@ -10,12 +10,19 @@ public class Dispense extends FeatureStart implements Listener {
 
     @EventHandler
     public void click(BlockDispenseEvent event) {
-        if (event.getItem().getType() == Material.WITHER_SKELETON_SKULL) {
-            event.setCancelled(true);
+        if (!config.getBoolean("Dispense.WitherSkull")) {
+            if (event.getItem().getType() == Material.WITHER_SKELETON_SKULL) {
+                event.setCancelled(true);
+            }
         }
+
     }
 
     public Dispense() {
+        plugin.getConfig().addDefault("Dispense.WitherSkull", false);
+        plugin.getConfig().options().copyDefaults(true);
+        plugin.saveConfig();
+        plugin.reloadConfig();
         pm.registerEvents(this, plugin);
     }
 }
