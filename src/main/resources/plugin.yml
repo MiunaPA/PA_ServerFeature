@@ -1,6 +1,6 @@
 main: me.miunapa.paserverfeature.PAServerFeature
 name: PAServerFeature
-version: 0.8.1
+version: 0.8.2
 api-version: 1.15
 
 commands:
@@ -47,8 +47,6 @@ permissions:
     default: op
   paserverfeature.suicide:
     default: true
-  paserverfeature.bypasslimit:
-    default: op
   paserverfeature.rule:
     default: true
   paserverfeature.signature:

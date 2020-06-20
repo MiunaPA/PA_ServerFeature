@@ -33,7 +33,6 @@ public class FeatureStart {
         new BeeCount();
         new ItemSign();
         new NewPlayer();
-        new PlayerLimitBypass();
         new Dispense();
         // player
         new PlayerDeath();
