@@ -48,19 +48,19 @@ public class EntitySpawn extends FeatureStart implements Listener {
                                     .append(clearCount.toString()).color(ChatColor.GREEN).create());
                 }
             }
-        } else if (event.getEntityType().equals(EntityType.PIG_ZOMBIE)) {
+        } else if (event.getEntityType().equals(EntityType.ZOMBIFIED_PIGLIN)) {
             Double random = Math.random();
-            Double chance = config.getDouble("EntitySpawn.ZombiePigman");
+            Double chance = config.getDouble("EntitySpawn.ZombifiedPiglin");
             if (random > chance && event.getSpawnReason() == SpawnReason.NETHER_PORTAL) {
                 event.setCancelled(true);
             } else {
                 pigCount += 1;
             }
-            if (pigCount >= config.getInt("EntitySpawn.ZombiePigman_Count")) {
+            if (pigCount >= config.getInt("EntitySpawn.ZombifiedPiglin_Count")) {
                 pigCount = 0;
                 Integer clearCount = 0;
                 for (Entity e : Bukkit.getWorld("world").getEntities()) {
-                    if (e.getType() == EntityType.PIG_ZOMBIE) {
+                    if (e.getType() == EntityType.ZOMBIFIED_PIGLIN) {
                         if (e.getCustomName() == null) {
                             LivingEntity entity = (LivingEntity) e;
                             entity.setHealth(0.0);
