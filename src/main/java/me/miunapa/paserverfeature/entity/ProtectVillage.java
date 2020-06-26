@@ -20,10 +20,6 @@ public class ProtectVillage extends FeatureStart implements Listener {
     }
 
     public ProtectVillage() {
-        plugin.getConfig().addDefault("ProtectVillage.zombie", false);
-        plugin.getConfig().options().copyDefaults(true);
-        plugin.saveConfig();
-        plugin.reloadConfig();
         pm.registerEvents(this, plugin);
     }
 }

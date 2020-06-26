@@ -6,9 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import me.miunapa.paserverfeature.FeatureStart;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
@@ -17,8 +15,6 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Sound;
 
 public class Suicide extends FeatureStart implements CommandExecutor {
-    Plugin plugin = Bukkit.getPluginManager().getPlugin("paserverfeature");
-    FileConfiguration config = plugin.getConfig();
     HashMap<UUID, Long> coolDown = new HashMap<UUID, Long>();
 
     @Override
@@ -46,9 +42,5 @@ public class Suicide extends FeatureStart implements CommandExecutor {
 
     public Suicide() {
         Bukkit.getPluginCommand("suicide").setExecutor(this);
-        plugin.getConfig().addDefault("SuicideCoolDown", 60);
-        plugin.getConfig().options().copyDefaults(true);
-        plugin.saveConfig();
-        plugin.reloadConfig();
     }
 }

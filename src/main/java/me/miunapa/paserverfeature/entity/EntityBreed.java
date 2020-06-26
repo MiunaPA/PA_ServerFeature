@@ -17,10 +17,6 @@ public class EntityBreed extends FeatureStart implements Listener {
     }
 
     public EntityBreed() {
-        plugin.getConfig().addDefault("EntityBreed.Villager", false);
-        plugin.getConfig().options().copyDefaults(true);
-        plugin.saveConfig();
-        plugin.reloadConfig();
         pm.registerEvents(this, plugin);
     }
 }

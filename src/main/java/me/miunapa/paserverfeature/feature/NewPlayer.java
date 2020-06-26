@@ -27,10 +27,6 @@ public class NewPlayer extends FeatureStart implements Listener {
     }
 
     public NewPlayer() {
-        plugin.getConfig().addDefault("NewPlayer.paper", true);
-        plugin.getConfig().options().copyDefaults(true);
-        plugin.saveConfig();
-        plugin.reloadConfig();
         pm.registerEvents(this, plugin);
     }
 

@@ -1,18 +1,13 @@
 package me.miunapa.paserverfeature.player;
 
 import me.miunapa.paserverfeature.FeatureStart;
-import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.plugin.Plugin;
 
 public class PlayerDeath extends FeatureStart implements Listener {
-    Plugin plugin = Bukkit.getPluginManager().getPlugin("paserverfeature");
-    FileConfiguration config = plugin.getConfig();
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {

@@ -242,9 +242,5 @@ public class PVP extends FeatureStart implements Listener, CommandExecutor {
         if (!pvpFile.exists()) {
             savePvpFile();
         }
-        plugin.getConfig().addDefault("PVPCoolDown", 30);
-        plugin.getConfig().options().copyDefaults(true);
-        plugin.saveConfig();
-        plugin.reloadConfig();
     }
 }

@@ -54,8 +54,6 @@ public class BlockPlace extends FeatureStart implements Listener {
     }
 
     public BlockPlace() {
-        plugin.getConfig().addDefault("TrippedLog", false);
-        plugin.getConfig().options().copyDefaults(true);
         trippedLogListInit();
         pm.registerEvents(this, plugin);
     }

@@ -19,10 +19,6 @@ public class Dispense extends FeatureStart implements Listener {
     }
 
     public Dispense() {
-        plugin.getConfig().addDefault("Dispense.WitherSkull", false);
-        plugin.getConfig().options().copyDefaults(true);
-        plugin.saveConfig();
-        plugin.reloadConfig();
         pm.registerEvents(this, plugin);
     }
 }

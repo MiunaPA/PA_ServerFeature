@@ -1,0 +1,19 @@
+DeathClearExp: true
+Dispense:
+  WitherSkull: false
+NewPlayer:
+  paper: true
+ProtectVillage:
+  zombie: false
+EntityBreed:
+  Villager: false
+EntitySpawn:
+  IronGlorm: 0.2
+  IronGlorm_Count: 1000
+  ZombiePigman: 0.0
+  ZombiePigman_Count: 1000
+SuicideCoolDown: 60
+rule:
+- 伺服器規定
+TrippedLog: false
+PVPCoolDown: 30

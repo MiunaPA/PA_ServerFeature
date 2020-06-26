@@ -81,12 +81,5 @@ public class EntitySpawn extends FeatureStart implements Listener {
 
     public EntitySpawn() {
         pm.registerEvents(this, plugin);
-        plugin.getConfig().addDefault("EntitySpawn.IronGlorm", 0.2);
-        plugin.getConfig().addDefault("EntitySpawn.IronGlorm_Count", 1000);
-        plugin.getConfig().addDefault("EntitySpawn.ZombiePigman", 0.0);
-        plugin.getConfig().addDefault("EntitySpawn.ZombiePigman_Count", 1000);
-        plugin.getConfig().options().copyDefaults(true);
-        plugin.saveConfig();
-        plugin.reloadConfig();
     }
 }

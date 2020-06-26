@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.miunapa.paserverfeature</groupId>
     <artifactId>PAServerFeature</artifactId>
-    <version>1.0.0dev</version>
+    <version>1.0.0</version>
     <name>PAServerFeature</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -40,6 +40,7 @@
                 <directory>${project.basedir}/src/main/resources</directory>
                 <includes>
                     <include>plugin.yml</include>
+                    <include>config.yml</include>
                 </includes>
             </resource>
         </resources>
@@ -51,7 +52,7 @@
                 <configuration>
                     <source>8</source>
                     <target>8</target>
-                    <outputDirectory>/Working/Test_Server/plugins</outputDirectory>
+                    <outputDirectory>/Working/Test_Server1.16/plugins</outputDirectory>
                 </configuration>
             </plugin>
         </plugins>
