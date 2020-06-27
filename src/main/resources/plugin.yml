@@ -1,6 +1,6 @@
 main: me.miunapa.paserverfeature.Main
 name: PAServerFeature
-version: 1.1.0
+version: 1.1.1
 api-version: 1.16
 
 commands:
@@ -43,10 +43,8 @@ commands:
 permissions:
   paserverfeature.hat:
     default: true
-  paserverfeature.getip:
-    default: op
   paserverfeature.suicide:
-    default: true
+    default: op
   paserverfeature.rule:
     default: true
   paserverfeature.signature:
