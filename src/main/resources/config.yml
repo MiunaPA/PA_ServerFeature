@@ -13,6 +13,7 @@ EntitySpawn:
   ZombiePigman: 0.0
   ZombiePigman_Count: 1000
 SuicideCoolDown: 60
+SpawnerChange: false
 rule:
 - 伺服器規定
 TrippedLog: false

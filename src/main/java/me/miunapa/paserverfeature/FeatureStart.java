@@ -33,6 +33,7 @@ public class FeatureStart {
         new ItemSign();
         new NewPlayer();
         new Dispense();
+        new SpawnerChange();
         // player
         new PlayerDeath();
     }
