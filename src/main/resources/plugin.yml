@@ -1,6 +1,6 @@
 main: me.miunapa.paserverfeature.Main
 name: PAServerFeature
-version: 1.3.0
+version: 1.4.0dev
 api-version: 1.16
 
 commands:

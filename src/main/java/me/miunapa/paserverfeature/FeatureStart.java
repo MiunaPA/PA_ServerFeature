@@ -16,23 +16,24 @@ public class FeatureStart {
     public void init() {
         // command
         new Hat();
+        new Invisible();
+        new ItemSign();
+        new LockChange();
         new PVP();
         new Rule();
         new Suicide();
-        new LockChange();
-        new Invisible();
         // entity
-        new EntitySpawn();
         new EntityBreed();
+        new EntitySpawn();
         new ProtectVillage();
         // feature
         new BeeCount();
-        new ItemSign();
-        new NewPlayer();
-        new WitherDispense();
+        new NetheriteEquipment();
         new SpawnerChange();
         new StrippedLog();
+        new WitherDispense();
         // player
+        new NewPlayer();
         new PlayerDeath();
     }
 }

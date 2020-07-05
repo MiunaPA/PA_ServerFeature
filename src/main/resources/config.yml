@@ -18,3 +18,4 @@ rule:
 - 伺服器規定
 StrippedLog: false
 PVPCoolDown: 30
+NetheriteEquipment: false

@@ -1,4 +1,4 @@
-package me.miunapa.paserverfeature.feature;
+package me.miunapa.paserverfeature.command;
 
 import java.util.ArrayList;
 import java.util.List;

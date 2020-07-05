@@ -18,6 +18,7 @@ import net.md_5.bungee.api.ChatColor;
 public class StrippedLog extends FeatureStart implements Listener {
     List<Wood> logs = new ArrayList<Wood>();
     List<Material> axes = new ArrayList<Material>();
+    List<NamespacedKey> recipes = new ArrayList<NamespacedKey>();
 
     @EventHandler
     public void onTrippedLog(BlockPlaceEvent event) {
@@ -78,6 +79,7 @@ public class StrippedLog extends FeatureStart implements Listener {
             strippedLogRecipe.shape(new String[] {"NN"});
             strippedLogRecipe.setIngredient('N', wood.getLog());
             Bukkit.addRecipe((Recipe) strippedLogRecipe);
+            recipes.add(strippedLogKey);
             // 剝皮木塊
             ItemStack strippedWood = new ItemStack(wood.getStrippedWood());
             NamespacedKey strippedWoodKey =
@@ -86,6 +88,14 @@ public class StrippedLog extends FeatureStart implements Listener {
             strippedWoodRecipe.shape(new String[] {"NN"});
             strippedWoodRecipe.setIngredient('N', wood.getWood());
             Bukkit.addRecipe((Recipe) strippedWoodRecipe);
+            recipes.add(strippedWoodKey);
+        }
+    }
+
+    public void onDisable() {
+        for (NamespacedKey recipe : recipes) {
+            Bukkit.removeRecipe(recipe);
+            System.out.println(recipe);
         }
     }
 

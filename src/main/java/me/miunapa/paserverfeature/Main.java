@@ -5,16 +5,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends JavaPlugin {
     FileConfiguration config = this.getConfig();
+    FeatureStart featureStart;
 
     @Override
     public void onEnable() {
         this.saveDefaultConfig();
-        FeatureStart featureStart = new FeatureStart();
-        featureStart.init();
-        getLogger().info("paserverfeature Start  Author:MiunaPA");
+        featureStart = new FeatureStart();
+        getLogger().info("PAServerFeature Start  Author:MiunaPA");
     }
 
     @Override
     public void onDisable() {
+
     }
 }
