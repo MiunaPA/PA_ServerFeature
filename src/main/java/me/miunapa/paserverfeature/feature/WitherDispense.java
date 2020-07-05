@@ -6,7 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDispenseEvent;
 import me.miunapa.paserverfeature.FeatureStart;
 
-public class Dispense extends FeatureStart implements Listener {
+public class WitherDispense extends FeatureStart implements Listener {
 
     @EventHandler
     public void click(BlockDispenseEvent event) {
@@ -18,7 +18,7 @@ public class Dispense extends FeatureStart implements Listener {
 
     }
 
-    public Dispense() {
+    public WitherDispense() {
         pm.registerEvents(this, plugin);
     }
 }

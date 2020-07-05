@@ -3,7 +3,6 @@ package me.miunapa.paserverfeature;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
-import me.miunapa.paserverfeature.block.*;
 import me.miunapa.paserverfeature.command.*;
 import me.miunapa.paserverfeature.entity.*;
 import me.miunapa.paserverfeature.feature.*;
@@ -15,8 +14,6 @@ public class FeatureStart {
     public PluginManager pm = Bukkit.getPluginManager();
 
     public void init() {
-        // block
-        new BlockPlace();
         // command
         new Hat();
         new PVP();
@@ -32,8 +29,9 @@ public class FeatureStart {
         new BeeCount();
         new ItemSign();
         new NewPlayer();
-        new Dispense();
+        new WitherDispense();
         new SpawnerChange();
+        new TrippedLog();
         // player
         new PlayerDeath();
     }

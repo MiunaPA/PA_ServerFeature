@@ -1,4 +1,4 @@
-package me.miunapa.paserverfeature.block;
+package me.miunapa.paserverfeature.feature;
 
 import me.miunapa.paserverfeature.FeatureStart;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import net.md_5.bungee.api.ChatColor;
 
-public class BlockPlace extends FeatureStart implements Listener {
+public class TrippedLog extends FeatureStart implements Listener {
     List<Material> trippedLogs = new ArrayList<Material>();
     List<Material> axes = new ArrayList<Material>();
 
@@ -54,7 +54,7 @@ public class BlockPlace extends FeatureStart implements Listener {
         axes.add(Material.NETHERITE_AXE);
     }
 
-    public BlockPlace() {
+    public TrippedLog() {
         trippedLogListInit();
         pm.registerEvents(this, plugin);
     }
