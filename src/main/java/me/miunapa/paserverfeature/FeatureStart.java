@@ -31,7 +31,7 @@ public class FeatureStart {
         new NewPlayer();
         new WitherDispense();
         new SpawnerChange();
-        new TrippedLog();
+        new StrippedLog();
         // player
         new PlayerDeath();
     }

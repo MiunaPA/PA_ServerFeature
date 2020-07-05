@@ -16,5 +16,5 @@ SuicideCoolDown: 60
 SpawnerChange: false
 rule:
 - 伺服器規定
-TrippedLog: false
+StrippedLog: false
 PVPCoolDown: 30
