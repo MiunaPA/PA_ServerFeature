@@ -9,9 +9,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.TextComponent;
 
 public class BlockPlace extends FeatureStart implements Listener {
     List<Material> trippedLogs = new ArrayList<Material>();
@@ -24,9 +21,8 @@ public class BlockPlace extends FeatureStart implements Listener {
                 Player player = event.getPlayer();
                 Material playerTool = player.getInventory().getItemInMainHand().getType();
                 if (axes.contains(playerTool)) {
-                    BaseComponent[] baseComponent = TextComponent.fromLegacyText(ChatColor.GOLD
-                            + "若要取得剝皮原木" + ChatColor.WHITE + " 請將原木or木塊 排成同壓力版合成方式 取得");
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, baseComponent);
+                    player.sendActionBar(ChatColor.GOLD + "若要取得剝皮原木" + ChatColor.WHITE
+                            + " 請將原木or木塊 排成同壓力版合成方式 取得");
                     event.setCancelled(true);
                 }
             }
@@ -46,11 +42,16 @@ public class BlockPlace extends FeatureStart implements Listener {
         trippedLogs.add(Material.STRIPPED_OAK_WOOD);
         trippedLogs.add(Material.STRIPPED_SPRUCE_LOG);
         trippedLogs.add(Material.STRIPPED_SPRUCE_WOOD);
+        trippedLogs.add(Material.STRIPPED_WARPED_STEM);
+        trippedLogs.add(Material.STRIPPED_WARPED_HYPHAE);
+        trippedLogs.add(Material.STRIPPED_CRIMSON_HYPHAE);
+        trippedLogs.add(Material.STRIPPED_CRIMSON_STEM);
         axes.add(Material.WOODEN_AXE);
         axes.add(Material.STONE_AXE);
         axes.add(Material.IRON_AXE);
         axes.add(Material.GOLDEN_AXE);
         axes.add(Material.DIAMOND_AXE);
+        axes.add(Material.NETHERITE_AXE);
     }
 
     public BlockPlace() {

@@ -11,8 +11,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import me.miunapa.paserverfeature.FeatureStart;
 import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 
 public class BeeCount extends FeatureStart implements Listener {
 
@@ -27,12 +25,10 @@ public class BeeCount extends FeatureStart implements Listener {
                 if (block.getType().equals(Material.BEEHIVE)
                         || block.getType().equals(Material.BEE_NEST)) {
                     Beehive beehive = (Beehive) (block.getState());
-                    String output = ChatColor.RED + "這個蜂箱裡面有 " + ChatColor.YELLOW
+                    player.sendActionBar(ChatColor.RED + "這個蜂箱裡面有 " + ChatColor.YELLOW
                             + beehive.getEntityCount() + ChatColor.RED + " 隻蜜蜂" + ChatColor.GRAY
                             + "(x:" + beehive.getX() + " y:" + beehive.getY() + " z:"
-                            + beehive.getZ() + ")";
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-                            TextComponent.fromLegacyText(output));
+                            + beehive.getZ() + ")");
                 }
             }
         }

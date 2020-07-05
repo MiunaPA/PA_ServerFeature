@@ -11,8 +11,6 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import me.miunapa.paserverfeature.FeatureStart;
 import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.ComponentBuilder;
 
 public class EntitySpawn extends FeatureStart implements Listener {
     Integer pigCount = 0;
@@ -43,9 +41,8 @@ public class EntitySpawn extends FeatureStart implements Listener {
                     }
                 }
                 for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-                            new ComponentBuilder("已自動清潔鐵巨人 : ").color(ChatColor.RED)
-                                    .append(clearCount.toString()).color(ChatColor.GREEN).create());
+                    player.sendActionBar(ChatColor.RED + "已自動清潔鐵巨人 : " + ChatColor.GREEN
+                            + clearCount.toString());
                 }
             }
         } else if (event.getEntityType().equals(EntityType.ZOMBIFIED_PIGLIN)) {
@@ -71,9 +68,8 @@ public class EntitySpawn extends FeatureStart implements Listener {
                     }
                 }
                 for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-                            new ComponentBuilder("已自動清潔豬人 : ").color(ChatColor.RED)
-                                    .append(clearCount.toString()).color(ChatColor.GREEN).create());
+                    player.sendActionBar(
+                            ChatColor.RED + "已自動清潔豬人 : " + ChatColor.GREEN + clearCount.toString());
                 }
             }
         }

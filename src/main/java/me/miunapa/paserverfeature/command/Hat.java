@@ -7,8 +7,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,13 +23,11 @@ public class Hat implements CommandExecutor {
             ItemStack hand = inv.getItemInMainHand();
             ItemStack hat = inv.getHelmet();
             if (hand.getType() == Material.AIR) {
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-                        TextComponent.fromLegacyText(ChatColor.GRAY + "你手上沒有東西..."));
+                player.sendActionBar(ChatColor.GRAY + "你手上沒有東西...");
                 return true;
             }
             if (hand.getAmount() != 1) {
-                player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-                        TextComponent.fromLegacyText(ChatColor.RED + "你手上物品數量超過一個 無法穿上"));
+                player.sendActionBar(ChatColor.RED + "你手上物品數量超過一個 無法穿上");
                 return true;
             }
             if (shulkerBox.contains(hand.getType())) {
@@ -40,8 +36,7 @@ public class Hat implements CommandExecutor {
             inv.setHelmet(hand);
             inv.setItemInMainHand(hat);
             player.updateInventory();
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-                    TextComponent.fromLegacyText(ChatColor.GREEN + "帽子穿好囉~"));
+            player.sendActionBar(ChatColor.GREEN + "帽子穿好囉~");
         }
         return true;
     }

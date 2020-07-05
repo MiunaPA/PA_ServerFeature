@@ -10,8 +10,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import me.miunapa.paserverfeature.FeatureStart;
 import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 
 public class SpawnerChange extends FeatureStart implements Listener {
     @EventHandler
@@ -23,8 +21,7 @@ public class SpawnerChange extends FeatureStart implements Listener {
                 if (isEgg(player.getInventory().getItemInMainHand())
                         && isSpawner(event.getClickedBlock())) {
                     event.setCancelled(true);
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-                            TextComponent.fromLegacyText(ChatColor.RED + "你不能修改生怪磚的怪物"));
+                    player.sendActionBar(ChatColor.RED + "你不能修改生怪磚的怪物");
                 }
             }
         }

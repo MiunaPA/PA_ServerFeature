@@ -31,8 +31,6 @@ import org.bukkit.event.weather.LightningStrikeEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import me.miunapa.paserverfeature.FeatureStart;
 import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
 
 public class PVP extends FeatureStart implements Listener, CommandExecutor {
     HashMap<UUID, Long> pvpCoolDown = new HashMap<UUID, Long>();
@@ -96,27 +94,21 @@ public class PVP extends FeatureStart implements Listener, CommandExecutor {
         String damagerUUID = damager.getUniqueId().toString();
         String injuredUUID = injured.getUniqueId().toString();
         if (damager.hasPermission("paserverfeature.pvpbypass")) {
-            damager.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-                    TextComponent.fromLegacyText(ChatColor.DARK_RED + "PVP Bypass "
-                            + injured.getName() + " (" + ChatColor.GRAY + typeMessage + ")"));
+            damager.sendActionBar(ChatColor.DARK_RED + "PVP Bypass " + injured.getName() + " ("
+                    + ChatColor.GRAY + typeMessage + ")");
             return false;
         }
         if (!pvp.getBoolean(injuredUUID) && !pvp.getBoolean(damagerUUID)) {
-            damager.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-                    TextComponent.fromLegacyText(
-                            ChatColor.DARK_RED + injured.getName() + " 與你 " + ChatColor.GOLD
-                                    + "都關閉了PVP " + ChatColor.GRAY + "(" + typeMessage + ")"));
+            damager.sendActionBar(ChatColor.DARK_RED + injured.getName() + " 與你 " + ChatColor.GOLD
+                    + "都關閉了PVP " + ChatColor.GRAY + "(" + typeMessage + ")");
             return true;
         } else if (!pvp.getBoolean(injuredUUID)) {
-            damager.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-                    TextComponent
-                            .fromLegacyText(ChatColor.DARK_RED + injured.getName() + ChatColor.GOLD
-                                    + " 關閉了PVP " + ChatColor.GRAY + "(" + typeMessage + ")"));
+            damager.sendActionBar(ChatColor.DARK_RED + injured.getName() + ChatColor.GOLD
+                    + " 關閉了PVP " + ChatColor.GRAY + "(" + typeMessage + ")");
             return true;
         } else if (!pvp.getBoolean(damagerUUID)) {
-            damager.spigot().sendMessage(ChatMessageType.ACTION_BAR,
-                    TextComponent.fromLegacyText(ChatColor.DARK_RED + "你關閉了PVP  " + ChatColor.GRAY
-                            + "(" + typeMessage + ") {" + injured.getName() + "}"));
+            damager.sendActionBar(ChatColor.DARK_RED + "你關閉了PVP  " + ChatColor.GRAY + "("
+                    + typeMessage + ") {" + injured.getName() + "}");
             return true;
         } else {
             return false;
