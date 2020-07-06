@@ -1,6 +1,6 @@
 package me.miunapa.paserverfeature.feature;
 
-import me.miunapa.paserverfeature.FeatureStart;
+import me.miunapa.paserverfeature.SubFeature;
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.Bukkit;
@@ -15,10 +15,26 @@ import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.ShapedRecipe;
 import net.md_5.bungee.api.ChatColor;
 
-public class StrippedLog extends FeatureStart implements Listener {
+public class StrippedLog extends SubFeature implements Listener {
     List<Wood> logs = new ArrayList<Wood>();
     List<Material> axes = new ArrayList<Material>();
     List<NamespacedKey> recipes = new ArrayList<NamespacedKey>();
+
+    public StrippedLog() {
+        super("StrippedLog");
+        if (!config.getBoolean("StrippedLog")) {
+            logList();
+            axeList();
+            logRecipe();
+            pm.registerEvents(this, plugin);
+        }
+    }
+
+    public void onDisable() {
+        for (NamespacedKey recipe : recipes) {
+            Bukkit.removeRecipe(recipe);
+        }
+    }
 
     @EventHandler
     public void onTrippedLog(BlockPlaceEvent event) {
@@ -89,22 +105,6 @@ public class StrippedLog extends FeatureStart implements Listener {
             strippedWoodRecipe.setIngredient('N', wood.getWood());
             Bukkit.addRecipe((Recipe) strippedWoodRecipe);
             recipes.add(strippedWoodKey);
-        }
-    }
-
-    public void onDisable() {
-        for (NamespacedKey recipe : recipes) {
-            Bukkit.removeRecipe(recipe);
-            System.out.println(recipe);
-        }
-    }
-
-    public StrippedLog() {
-        if (!config.getBoolean("StrippedLog")) {
-            logList();
-            axeList();
-            logRecipe();
-            pm.registerEvents(this, plugin);
         }
     }
 

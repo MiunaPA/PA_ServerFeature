@@ -9,12 +9,21 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
-import me.miunapa.paserverfeature.FeatureStart;
+import me.miunapa.paserverfeature.SubFeature;
 import net.md_5.bungee.api.ChatColor;
 
-public class EntitySpawn extends FeatureStart implements Listener {
+public class EntitySpawn extends SubFeature implements Listener {
     Integer pigCount = 0;
     Integer ironGolemCount = 0;
+
+    public EntitySpawn() {
+        super("EntitySpawn");
+        pm.registerEvents(this, plugin);
+    }
+
+    public void onDisable() {
+
+    }
 
     @EventHandler
     public void EntitySpawnEvent(CreatureSpawnEvent event) {
@@ -73,9 +82,5 @@ public class EntitySpawn extends FeatureStart implements Listener {
                 }
             }
         }
-    }
-
-    public EntitySpawn() {
-        pm.registerEvents(this, plugin);
     }
 }

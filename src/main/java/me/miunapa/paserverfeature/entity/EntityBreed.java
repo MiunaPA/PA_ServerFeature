@@ -4,9 +4,18 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityBreedEvent;
-import me.miunapa.paserverfeature.FeatureStart;
+import me.miunapa.paserverfeature.SubFeature;
 
-public class EntityBreed extends FeatureStart implements Listener {
+public class EntityBreed extends SubFeature implements Listener {
+    public EntityBreed() {
+        super("EntityBreed");
+        pm.registerEvents(this, plugin);
+    }
+
+    public void onDisable() {
+
+    }
+
     @EventHandler
     public void EntitySpawnEvent(EntityBreedEvent event) {
         if (!config.getBoolean("EntityBreed.Villager")) {
@@ -14,9 +23,5 @@ public class EntityBreed extends FeatureStart implements Listener {
                 event.setCancelled(true);
             }
         }
-    }
-
-    public EntityBreed() {
-        pm.registerEvents(this, plugin);
     }
 }

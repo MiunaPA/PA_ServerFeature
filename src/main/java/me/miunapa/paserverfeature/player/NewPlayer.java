@@ -11,10 +11,18 @@ import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import me.miunapa.paserverfeature.FeatureStart;
+import me.miunapa.paserverfeature.SubFeature;
 import net.md_5.bungee.api.ChatColor;
 
-public class NewPlayer extends FeatureStart implements Listener {
+public class NewPlayer extends SubFeature implements Listener {
+    public NewPlayer() {
+        super("NewPlayer");
+        pm.registerEvents(this, plugin);
+    }
+
+    public void onDisable() {
+
+    }
 
     @EventHandler
     public void onPlayerLoginEvent(PlayerLoginEvent event) {
@@ -24,10 +32,6 @@ public class NewPlayer extends FeatureStart implements Listener {
                 getNewPlayerPaper(player);
             }
         }
-    }
-
-    public NewPlayer() {
-        pm.registerEvents(this, plugin);
     }
 
     void getNewPlayerPaper(Player player) {

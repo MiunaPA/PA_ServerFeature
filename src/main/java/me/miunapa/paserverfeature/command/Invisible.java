@@ -7,9 +7,19 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import me.miunapa.paserverfeature.SubFeature;
 import net.md_5.bungee.api.ChatColor;
 
-public class Invisible implements CommandExecutor {
+public class Invisible extends SubFeature implements CommandExecutor {
+    public Invisible() {
+        super("Invisible");
+        Bukkit.getPluginCommand("invisible").setExecutor(this);
+    }
+
+    public void onDisable() {
+
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
@@ -20,9 +30,5 @@ public class Invisible implements CommandExecutor {
             player.sendMessage(ChatColor.LIGHT_PURPLE + "給予了三分鐘的無氣泡隱形");
         }
         return true;
-    }
-
-    public Invisible() {
-        Bukkit.getPluginCommand("invisible").setExecutor(this);
     }
 }

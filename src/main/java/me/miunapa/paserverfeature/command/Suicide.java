@@ -7,12 +7,21 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import me.miunapa.paserverfeature.FeatureStart;
+import me.miunapa.paserverfeature.SubFeature;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Sound;
 
-public class Suicide extends FeatureStart implements CommandExecutor {
+public class Suicide extends SubFeature implements CommandExecutor {
     HashMap<UUID, Long> coolDown = new HashMap<UUID, Long>();
+
+    public Suicide() {
+        super("Suicide");
+        Bukkit.getPluginCommand("suicide").setExecutor(this);
+    }
+
+    public void onDisable() {
+
+    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -36,9 +45,5 @@ public class Suicide extends FeatureStart implements CommandExecutor {
             sender.sendMessage(ChatColor.RED + "只有玩家可以自殺");
         }
         return true;
-    }
-
-    public Suicide() {
-        Bukkit.getPluginCommand("suicide").setExecutor(this);
     }
 }

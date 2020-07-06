@@ -5,9 +5,18 @@ import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import me.miunapa.paserverfeature.FeatureStart;
+import me.miunapa.paserverfeature.SubFeature;
 
-public class ProtectVillage extends FeatureStart implements Listener {
+public class ProtectVillage extends SubFeature implements Listener {
+    public ProtectVillage() {
+        super("ProtectVillage");
+        pm.registerEvents(this, plugin);
+    }
+
+    public void onDisable() {
+
+    }
+
     @EventHandler
     public void onHit(EntityDamageByEntityEvent event) {
         if (config.contains("ProtectVillage.zombie")) {
@@ -17,9 +26,5 @@ public class ProtectVillage extends FeatureStart implements Listener {
                 }
             }
         }
-    }
-
-    public ProtectVillage() {
-        pm.registerEvents(this, plugin);
     }
 }

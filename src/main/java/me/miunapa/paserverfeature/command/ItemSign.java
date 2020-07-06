@@ -17,10 +17,19 @@ import org.bukkit.inventory.CartographyInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
-import me.miunapa.paserverfeature.FeatureStart;
+import me.miunapa.paserverfeature.SubFeature;
 import net.md_5.bungee.api.ChatColor;
 
-public class ItemSign extends FeatureStart implements Listener, CommandExecutor, TabCompleter {
+public class ItemSign extends SubFeature implements Listener, CommandExecutor, TabCompleter {
+    public ItemSign() {
+        super("ItemSign");
+        pm.registerEvents(this, plugin);
+        Bukkit.getPluginCommand("signature").setExecutor(this);
+    }
+
+    public void onDisable() {
+
+    }
 
     @EventHandler
     public void onPrepareItemCraftEvent(PrepareItemCraftEvent event) {
@@ -168,10 +177,5 @@ public class ItemSign extends FeatureStart implements Listener, CommandExecutor,
         } else {
             player.sendMessage(ChatColor.RED + "本物品沒有署名!");
         }
-    }
-
-    public ItemSign() {
-        pm.registerEvents(this, plugin);
-        Bukkit.getPluginCommand("signature").setExecutor(this);
     }
 }

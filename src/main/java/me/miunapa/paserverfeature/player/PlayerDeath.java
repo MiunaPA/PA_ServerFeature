@@ -1,13 +1,25 @@
 package me.miunapa.paserverfeature.player;
 
-import me.miunapa.paserverfeature.FeatureStart;
+import me.miunapa.paserverfeature.SubFeature;
 import org.bukkit.GameRule;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-public class PlayerDeath extends FeatureStart implements Listener {
+public class PlayerDeath extends SubFeature implements Listener {
+    public PlayerDeath() {
+        super("PlayerDeath");
+        pm.registerEvents(this, plugin);
+        plugin.getConfig().addDefault("DeathClearExp", true);
+        plugin.getConfig().options().copyDefaults(true);
+        plugin.saveConfig();
+        plugin.reloadConfig();
+    }
+
+    public void onDisable() {
+
+    }
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
@@ -45,15 +57,6 @@ public class PlayerDeath extends FeatureStart implements Listener {
                 }
             }
         }
-    }
-
-    public PlayerDeath() {
-        pm.registerEvents(this, plugin);
-        plugin.getConfig().addDefault("DeathClearExp", true);
-        plugin.getConfig().options().copyDefaults(true);
-        plugin.saveConfig();
-        plugin.reloadConfig();
-
     }
 
     public Double getLevelTotalExp(Integer level, Integer nowExp) {

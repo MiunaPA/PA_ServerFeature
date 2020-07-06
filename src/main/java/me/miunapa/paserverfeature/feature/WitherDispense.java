@@ -4,9 +4,17 @@ import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDispenseEvent;
-import me.miunapa.paserverfeature.FeatureStart;
+import me.miunapa.paserverfeature.SubFeature;
 
-public class WitherDispense extends FeatureStart implements Listener {
+public class WitherDispense extends SubFeature implements Listener {
+    public WitherDispense() {
+        super("WitherDispense");
+        pm.registerEvents(this, plugin);
+    }
+
+    public void onDisable() {
+
+    }
 
     @EventHandler
     public void click(BlockDispenseEvent event) {
@@ -15,10 +23,5 @@ public class WitherDispense extends FeatureStart implements Listener {
                 event.setCancelled(true);
             }
         }
-
-    }
-
-    public WitherDispense() {
-        pm.registerEvents(this, plugin);
     }
 }

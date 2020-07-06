@@ -9,10 +9,18 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import me.miunapa.paserverfeature.FeatureStart;
+import me.miunapa.paserverfeature.SubFeature;
 import net.md_5.bungee.api.ChatColor;
 
-public class BeeCount extends FeatureStart implements Listener {
+public class BeeCount extends SubFeature implements Listener {
+    public BeeCount() {
+        super("BeeCount");
+        pm.registerEvents(this, plugin);
+    }
+
+    public void onDisable() {
+
+    }
 
     @EventHandler
     public void click(PlayerInteractEvent event) {
@@ -32,9 +40,5 @@ public class BeeCount extends FeatureStart implements Listener {
                 }
             }
         }
-    }
-
-    public BeeCount() {
-        pm.registerEvents(this, plugin);
     }
 }

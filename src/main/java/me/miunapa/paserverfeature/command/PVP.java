@@ -29,13 +29,26 @@ import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.weather.LightningStrikeEvent;
 import org.bukkit.metadata.FixedMetadataValue;
-import me.miunapa.paserverfeature.FeatureStart;
+import me.miunapa.paserverfeature.SubFeature;
 import net.md_5.bungee.api.ChatColor;
 
-public class PVP extends FeatureStart implements Listener, CommandExecutor {
+public class PVP extends SubFeature implements Listener, CommandExecutor {
     HashMap<UUID, Long> pvpCoolDown = new HashMap<UUID, Long>();
     File pvpFile = new File(plugin.getDataFolder(), "pvp_status.yml");
     YamlConfiguration pvp = YamlConfiguration.loadConfiguration(pvpFile);
+
+    public PVP() {
+        super("PVP");
+        pm.registerEvents(this, plugin);
+        Bukkit.getPluginCommand("pvp").setExecutor(this);
+        if (!pvpFile.exists()) {
+            savePvpFile();
+        }
+    }
+
+    public void onDisable() {
+
+    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -228,11 +241,5 @@ public class PVP extends FeatureStart implements Listener, CommandExecutor {
         }
     }
 
-    public PVP() {
-        pm.registerEvents(this, plugin);
-        Bukkit.getPluginCommand("pvp").setExecutor(this);
-        if (!pvpFile.exists()) {
-            savePvpFile();
-        }
-    }
+
 }

@@ -8,10 +8,19 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import me.miunapa.paserverfeature.FeatureStart;
+import me.miunapa.paserverfeature.SubFeature;
 import net.md_5.bungee.api.ChatColor;
 
-public class SpawnerChange extends FeatureStart implements Listener {
+public class SpawnerChange extends SubFeature implements Listener {
+    public SpawnerChange() {
+        super("SpawnerChange");
+        pm.registerEvents(this, plugin);
+    }
+
+    public void onDisable() {
+
+    }
+
     @EventHandler
     public void click(PlayerInteractEvent event) {
         if (!config.getBoolean("SpawnerChange")) {
@@ -25,10 +34,6 @@ public class SpawnerChange extends FeatureStart implements Listener {
                 }
             }
         }
-    }
-
-    public SpawnerChange() {
-        pm.registerEvents(this, plugin);
     }
 
     boolean isEgg(ItemStack item) {

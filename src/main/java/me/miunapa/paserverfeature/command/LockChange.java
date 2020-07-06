@@ -15,12 +15,23 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import me.miunapa.paserverfeature.FeatureStart;
+import me.miunapa.paserverfeature.SubFeature;
 import net.md_5.bungee.api.ChatColor;
 
-public class LockChange extends FeatureStart implements Listener, CommandExecutor, TabCompleter {
+public class LockChange extends SubFeature implements Listener, CommandExecutor, TabCompleter {
     List<Material> signList = new ArrayList<Material>();
     HashMap<String, String> changeName = new HashMap<String, String>();
+
+    public LockChange() {
+        super("LockChange");
+        testList();
+        pm.registerEvents(this, plugin);
+        Bukkit.getPluginCommand("lc").setExecutor(this);
+    }
+
+    public void onDisable() {
+
+    }
 
     @EventHandler
     public void click(PlayerInteractEvent event) {
@@ -92,11 +103,5 @@ public class LockChange extends FeatureStart implements Listener, CommandExecuto
         signList.add(Material.SPRUCE_WALL_SIGN);
         signList.add(Material.JUNGLE_SIGN);
         signList.add(Material.JUNGLE_WALL_SIGN);
-    }
-
-    public LockChange() {
-        testList();
-        pm.registerEvents(this, plugin);
-        Bukkit.getPluginCommand("lc").setExecutor(this);
     }
 }
