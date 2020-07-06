@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.block.Sign;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -19,12 +19,10 @@ import me.miunapa.paserverfeature.SubFeature;
 import net.md_5.bungee.api.ChatColor;
 
 public class LockChange extends SubFeature implements Listener, CommandExecutor, TabCompleter {
-    List<Material> signList = new ArrayList<Material>();
     HashMap<String, String> changeName = new HashMap<String, String>();
 
     public LockChange() {
         super("LockChange");
-        testList();
         pm.registerEvents(this, plugin);
         Bukkit.getPluginCommand("lc").setExecutor(this);
     }
@@ -38,7 +36,7 @@ public class LockChange extends SubFeature implements Listener, CommandExecutor,
         Player player = event.getPlayer();
         Action action = event.getAction();
         if (action == Action.RIGHT_CLICK_BLOCK) {
-            if (signList.contains(event.getClickedBlock().getType())) {
+            if (Tag.SIGNS.isTagged(event.getClickedBlock().getType())) {
                 Sign sign = (Sign) event.getClickedBlock().getState();
                 boolean edit = false;
                 for (int i = 0; i < sign.getLines().length; i++) {
@@ -88,20 +86,5 @@ public class LockChange extends SubFeature implements Listener, CommandExecutor,
             return tabList;
         }
         return null;
-    }
-
-    void testList() {
-        signList.add(Material.ACACIA_SIGN);
-        signList.add(Material.ACACIA_WALL_SIGN);
-        signList.add(Material.BIRCH_SIGN);
-        signList.add(Material.BIRCH_WALL_SIGN);
-        signList.add(Material.DARK_OAK_SIGN);
-        signList.add(Material.DARK_OAK_WALL_SIGN);
-        signList.add(Material.OAK_SIGN);
-        signList.add(Material.OAK_WALL_SIGN);
-        signList.add(Material.SPRUCE_SIGN);
-        signList.add(Material.SPRUCE_WALL_SIGN);
-        signList.add(Material.JUNGLE_SIGN);
-        signList.add(Material.JUNGLE_WALL_SIGN);
     }
 }
