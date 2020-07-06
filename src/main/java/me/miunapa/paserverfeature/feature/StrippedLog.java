@@ -92,7 +92,7 @@ public class StrippedLog extends SubFeature implements Listener {
             ItemStack strippedLog = new ItemStack(wood.getStrippedLog());
             NamespacedKey strippedLogKey = new NamespacedKey(plugin, "pasf_log_" + wood.getName());
             ShapedRecipe strippedLogRecipe = new ShapedRecipe(strippedLogKey, strippedLog);
-            strippedLogRecipe.shape(new String[] {"NN"});
+            strippedLogRecipe.shape("NN");
             strippedLogRecipe.setIngredient('N', wood.getLog());
             Bukkit.addRecipe((Recipe) strippedLogRecipe);
             recipes.add(strippedLogKey);
@@ -101,7 +101,7 @@ public class StrippedLog extends SubFeature implements Listener {
             NamespacedKey strippedWoodKey =
                     new NamespacedKey(plugin, "pasf_wood_" + wood.getName());
             ShapedRecipe strippedWoodRecipe = new ShapedRecipe(strippedWoodKey, strippedWood);
-            strippedWoodRecipe.shape(new String[] {"NN"});
+            strippedWoodRecipe.shape("NN");
             strippedWoodRecipe.setIngredient('N', wood.getWood());
             Bukkit.addRecipe((Recipe) strippedWoodRecipe);
             recipes.add(strippedWoodKey);
