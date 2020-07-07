@@ -31,8 +31,8 @@ public class Main extends JavaPlugin {
         // entity
         features.add(new EntityBreed());
         features.add(new EntitySpawn());
+        features.add(new FoxTowel());
         features.add(new ProtectVillage());
-        features.add(new WhiteFox());
         // feature
         features.add(new BeeCount());
         features.add(new NetheriteEquipment());

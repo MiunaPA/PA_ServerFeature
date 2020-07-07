@@ -12,8 +12,8 @@ import org.bukkit.inventory.ItemStack;
 import me.miunapa.paserverfeature.SubFeature;
 import net.md_5.bungee.api.ChatColor;
 
-public class WhiteFox extends SubFeature implements Listener {
-    public WhiteFox() {
+public class FoxTowel extends SubFeature implements Listener {
+    public FoxTowel() {
         super("WhiteFox");
         pm.registerEvents(this, plugin);
     }
