@@ -37,7 +37,7 @@ public class NetheriteEquipment extends SubFeature implements Listener {
     public void onInventoryOpenEvent(InventoryOpenEvent event) {
         if (event.getInventory().getType() == InventoryType.SMITHING) {
             Player player = (Player) event.getPlayer();
-            player.sendActionBar(ChatColor.RED + "伺服器關閉了獄髓裝備升級 請使用獄髓碇直接在合成台上合成裝備 (與一般裝備相同合成表)");
+            player.sendActionBar(ChatColor.RED + "伺服器關閉了獄髓裝備升級 請使用獄髓碇直接在工作台上合成裝備 (與一般裝備相同合成表)");
             event.setCancelled(true);
         }
     }
