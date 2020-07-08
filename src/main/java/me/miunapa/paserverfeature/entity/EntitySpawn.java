@@ -77,8 +77,8 @@ public class EntitySpawn extends SubFeature implements Listener {
                     }
                 }
                 for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-                    player.sendActionBar(
-                            ChatColor.RED + "已自動清潔豬人 : " + ChatColor.GREEN + clearCount.toString());
+                    player.sendActionBar(ChatColor.RED + "已自動清潔殭屍豬布林 : " + ChatColor.GREEN
+                            + clearCount.toString());
                 }
             }
         }
