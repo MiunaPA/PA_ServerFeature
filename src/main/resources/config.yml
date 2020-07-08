@@ -10,8 +10,8 @@ EntityBreed:
 EntitySpawn:
   IronGlorm: 0.2
   IronGlorm_Count: 1000
-  ZombiePigman: 0.0
-  ZombiePigman_Count: 1000
+  ZombifiedPiglin: 0.0
+  ZombifiedPiglin_Count: 1000
 SuicideCoolDown: 60
 SpawnerChange: false
 rule:
