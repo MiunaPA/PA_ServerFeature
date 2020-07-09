@@ -12,6 +12,7 @@ EntitySpawn:
   IronGlorm_Count: 1000
   ZombifiedPiglin: 0.0
   ZombifiedPiglin_Count: 1000
+  ZombifiedPiglin_GoldenSword: false
 SuicideCoolDown: 60
 SpawnerChange: false
 rule:

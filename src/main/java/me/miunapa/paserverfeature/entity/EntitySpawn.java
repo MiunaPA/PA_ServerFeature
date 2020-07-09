@@ -1,6 +1,7 @@
 package me.miunapa.paserverfeature.entity;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -59,8 +60,14 @@ public class EntitySpawn extends SubFeature implements Listener {
             Double chance = config.getDouble("EntitySpawn.ZombifiedPiglin");
             if (random > chance && event.getSpawnReason() == SpawnReason.NETHER_PORTAL) {
                 event.setCancelled(true);
-            } else {
-                pigCount += 1;
+                return;
+            }
+            pigCount += 1;
+            if (!config.getBoolean("EntitySpawn.ZombifiedPiglin_GoldenSword")) {
+                if (event.getEntity().getEquipment().getItemInMainHand()
+                        .getType() == Material.GOLDEN_SWORD) {
+                    event.getEntity().getEquipment().setItemInMainHandDropChance(0f);
+                }
             }
             if (pigCount >= config.getInt("EntitySpawn.ZombifiedPiglin_Count")) {
                 pigCount = 0;
