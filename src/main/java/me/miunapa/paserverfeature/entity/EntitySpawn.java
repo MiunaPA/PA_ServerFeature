@@ -2,6 +2,9 @@ package me.miunapa.paserverfeature.entity;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -13,17 +16,35 @@ import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import me.miunapa.paserverfeature.SubFeature;
 import net.md_5.bungee.api.ChatColor;
 
-public class EntitySpawn extends SubFeature implements Listener {
+public class EntitySpawn extends SubFeature implements Listener, CommandExecutor {
     Integer pigCount = 0;
     Integer ironGolemCount = 0;
 
     public EntitySpawn() {
         super("EntitySpawn");
         pm.registerEvents(this, plugin);
+        Bukkit.getPluginCommand("es").setExecutor(this);
     }
 
     public void onDisable() {
 
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (args.length == 1) {
+            if (args[0].equals("irongolem")) {
+                sender.sendMessage(
+                        ChatColor.YELLOW + "鐵巨人Count : " + ChatColor.RED + ironGolemCount);
+                return true;
+            } else if (args[0].equals("pigzombie")) {
+                sender.sendMessage(
+                        ChatColor.YELLOW + "殭屍豬布林Count : " + ChatColor.RED + ironGolemCount);
+                return true;
+            }
+        }
+        sender.sendMessage(ChatColor.RED + "/es <irongolem|pigzombie>");
+        return true;
     }
 
     @EventHandler
