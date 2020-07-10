@@ -43,7 +43,7 @@ public class EntitySpawn extends SubFeature implements Listener, CommandExecutor
                 return true;
             }
         }
-        sender.sendMessage(ChatColor.RED + "/es <irongolem|pigzombie>");
+        sender.sendMessage(ChatColor.RED + "/es <irongolem | pigzombie>");
         return true;
     }
 
