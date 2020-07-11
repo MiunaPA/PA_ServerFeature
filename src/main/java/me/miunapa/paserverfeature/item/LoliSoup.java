@@ -36,7 +36,7 @@ public class LoliSoup extends SubFeature implements Listener {
             if (item.getItemMeta().getDisplayName().equals("§6蘿莉濃湯")) {
                 if (breedList.contains(entity.getType())) {
                     Ageable age = (Ageable) entity;
-                    if (age.getAge() > 0) {
+                    if (age.getAge() >= 0) {
                         player.sendActionBar(ChatColor.RED + "不能用在成年動物上");
                         return;
                     }
