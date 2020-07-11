@@ -39,10 +39,8 @@ public class FoxTowel extends SubFeature implements Listener {
                         player.sendActionBar(ChatColor.RED + "狐狸變成紅色的了");
                     }
                     item.setAmount(0);
-
                 }
             }
         }
     }
-
 }

@@ -41,6 +41,7 @@ public class Main extends JavaPlugin {
         features.add(new WitherDispense());
         // item
         features.add(new FoxTowel());
+        features.add(new LoliSoup());
         // player
         features.add(new NewPlayer());
         features.add(new PlayerDeath());
