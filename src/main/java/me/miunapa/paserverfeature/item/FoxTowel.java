@@ -1,4 +1,4 @@
-package me.miunapa.paserverfeature.entity;
+package me.miunapa.paserverfeature.item;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
