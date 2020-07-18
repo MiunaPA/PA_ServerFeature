@@ -33,8 +33,8 @@ public class BeeCount extends SubFeature implements Listener {
                 if (block.getType().equals(Material.BEEHIVE)
                         || block.getType().equals(Material.BEE_NEST)) {
                     Beehive beehive = (Beehive) (block.getState());
-                    player.sendActionBar(ChatColor.RED + "這個蜂箱裡面有 " + ChatColor.YELLOW
-                            + beehive.getEntityCount() + ChatColor.RED + " 隻蜜蜂" + ChatColor.GRAY
+                    player.sendActionBar(ChatColor.GOLD + "這個蜂箱裡面有 " + ChatColor.YELLOW
+                            + beehive.getEntityCount() + ChatColor.GOLD + " 隻蜜蜂" + ChatColor.RED
                             + "(x:" + beehive.getX() + " y:" + beehive.getY() + " z:"
                             + beehive.getZ() + ")");
                 }

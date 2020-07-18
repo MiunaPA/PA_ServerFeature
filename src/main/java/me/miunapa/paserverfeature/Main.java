@@ -38,6 +38,7 @@ public class Main extends JavaPlugin {
         features.add(new NetheriteEquipment());
         features.add(new SpawnerChange());
         features.add(new StrippedLog());
+        features.add(new TurtleCount());
         features.add(new WitherDispense());
         // item
         features.add(new FoxTowel());
