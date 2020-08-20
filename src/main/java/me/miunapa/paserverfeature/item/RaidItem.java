@@ -2,6 +2,7 @@ package me.miunapa.paserverfeature.item;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -31,6 +32,11 @@ public class RaidItem extends SubFeature implements Listener {
             ItemStack item = player.getInventory().getItemInMainHand();
             if (item.getItemMeta().getDisplayName().equals("§a1450呼叫器")) {
                 player.sendActionBar(ChatColor.DARK_RED + "你觸發了突襲");
+                Block block = event.getRaid().getLocation().getBlock();
+                plugin.getLogger()
+                        .info(ChatColor.RED + "觸發突襲 " + ChatColor.GREEN + player.getName() + " "
+                                + ChatColor.GOLD + block.getX() + " " + block.getY() + " "
+                                + block.getZ());
                 item.setAmount(item.getAmount() - 1);
                 return;
             }
