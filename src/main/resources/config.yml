@@ -20,3 +20,4 @@ rule:
 StrippedLog: false
 PVPCoolDown: 30
 NetheriteEquipment: false
+RaidItem: false

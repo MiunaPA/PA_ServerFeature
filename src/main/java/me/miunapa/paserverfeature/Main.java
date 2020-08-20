@@ -43,6 +43,7 @@ public class Main extends JavaPlugin {
         // item
         features.add(new FoxTowel());
         features.add(new LoliSoup());
+        features.add(new RaidItem());
         // player
         features.add(new NewPlayer());
         features.add(new PlayerDeath());
