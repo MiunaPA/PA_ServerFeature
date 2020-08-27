@@ -39,10 +39,12 @@ public class PVP extends SubFeature implements Listener, CommandExecutor {
 
     public PVP() {
         super("PVP");
-        pm.registerEvents(this, plugin);
         Bukkit.getPluginCommand("pvp").setExecutor(this);
-        if (!pvpFile.exists()) {
-            savePvpFile();
+        if (config.getBoolean("PVPChange")) {
+            pm.registerEvents(this, plugin);
+            if (!pvpFile.exists()) {
+                savePvpFile();
+            }
         }
     }
 
@@ -53,41 +55,45 @@ public class PVP extends SubFeature implements Listener, CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
-            Player player = (Player) sender;
-            String playerUUID = player.getUniqueId().toString();
-            if (args.length != 0) {
-                if (pvp.getBoolean(playerUUID)) {
-                    player.sendMessage(ChatColor.GREEN + "你目前的PVP是開的!");
-                } else {
-                    player.sendMessage(ChatColor.RED + "你目前的PVP是關的!");
+            if (config.getBoolean("PVPChange")) {
+                Player player = (Player) sender;
+                String playerUUID = player.getUniqueId().toString();
+                if (args.length != 0) {
+                    if (pvp.getBoolean(playerUUID)) {
+                        player.sendMessage(ChatColor.GREEN + "你目前的PVP是開的!");
+                    } else {
+                        player.sendMessage(ChatColor.RED + "你目前的PVP是關的!");
+                    }
+                    return true;
                 }
-                return true;
-            }
-            if (!player.hasPermission("paserverfeature.pvpbypass")) {
-                if (pvpCoolDown.containsKey(player.getUniqueId())) {
-                    Long interval =
-                            System.currentTimeMillis() - pvpCoolDown.get(player.getUniqueId());
-                    if (interval <= config.getInt("PVPCoolDown") * 1000) {
-                        Long cd = config.getInt("PVPCoolDown")
-                                - (interval - (interval % 1000)) / 1000;
-                        player.sendMessage(
-                                ChatColor.RED + "PVP切換冷卻中! 請等待 " + ChatColor.YELLOW + cd + " 秒");
-                        return true;
+                if (!player.hasPermission("paserverfeature.pvpbypass")) {
+                    if (pvpCoolDown.containsKey(player.getUniqueId())) {
+                        Long interval =
+                                System.currentTimeMillis() - pvpCoolDown.get(player.getUniqueId());
+                        if (interval <= config.getInt("PVPCoolDown") * 1000) {
+                            Long cd = config.getInt("PVPCoolDown")
+                                    - (interval - (interval % 1000)) / 1000;
+                            player.sendMessage(ChatColor.RED + "PVP切換冷卻中! 請等待 " + ChatColor.YELLOW
+                                    + cd + " 秒");
+                            return true;
+                        }
                     }
                 }
-            }
-            if (pvp.getBoolean(playerUUID) == true) {
-                player.sendMessage(ChatColor.LIGHT_PURPLE + "關閉 PVP!");
-                pvp.set(playerUUID, false);
+                if (pvp.getBoolean(playerUUID) == true) {
+                    player.sendMessage(ChatColor.LIGHT_PURPLE + "關閉 PVP!");
+                    pvp.set(playerUUID, false);
+                    savePvpFile();
+                    pvpCoolDown.put(player.getUniqueId(), System.currentTimeMillis());
+                } else {
+                    player.sendMessage(ChatColor.YELLOW + "開啟 PVP!");
+                    pvp.set(playerUUID, true);
+                    savePvpFile();
+                    pvpCoolDown.put(player.getUniqueId(), System.currentTimeMillis());
+                }
                 savePvpFile();
-                pvpCoolDown.put(player.getUniqueId(), System.currentTimeMillis());
             } else {
-                player.sendMessage(ChatColor.YELLOW + "開啟 PVP!");
-                pvp.set(playerUUID, true);
-                savePvpFile();
-                pvpCoolDown.put(player.getUniqueId(), System.currentTimeMillis());
+                sender.sendMessage(ChatColor.RED + "PVP可更改功能關閉中(可PVP)");
             }
-            savePvpFile();
         } else {
             sender.sendMessage(ChatColor.RED + "只有玩家能使用該指令");
         }
