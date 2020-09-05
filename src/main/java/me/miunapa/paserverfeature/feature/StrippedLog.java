@@ -6,6 +6,7 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,14 +18,12 @@ import net.md_5.bungee.api.ChatColor;
 
 public class StrippedLog extends SubFeature implements Listener {
     List<Wood> logs = new ArrayList<Wood>();
-    List<Material> axes = new ArrayList<Material>();
     List<NamespacedKey> recipes = new ArrayList<NamespacedKey>();
 
     public StrippedLog() {
         super("StrippedLog");
         if (!config.getBoolean("StrippedLog")) {
             logList();
-            axeList();
             logRecipe();
             pm.registerEvents(this, plugin);
         }
@@ -39,8 +38,8 @@ public class StrippedLog extends SubFeature implements Listener {
     @EventHandler
     public void onTrippedLog(BlockPlaceEvent event) {
         Player player = event.getPlayer();
-        Material playerTool = player.getInventory().getItemInMainHand().getType();
-        if (axes.contains(playerTool)) {
+        ItemStack playerTool = player.getInventory().getItemInMainHand();
+        if (detectAxe(playerTool)) {
             if (isStrippedLog(event.getBlock().getType())) {
                 player.sendActionBar(
                         ChatColor.GOLD + "若要取得剝皮原木" + ChatColor.WHITE + " 請將原木or木塊 排成同壓力版合成方式 來取得");
@@ -68,13 +67,19 @@ public class StrippedLog extends SubFeature implements Listener {
                 Material.STRIPPED_WARPED_STEM, Material.STRIPPED_WARPED_HYPHAE)); // 緋紅蕈柄
     }
 
-    void axeList() {
-        axes.add(Material.WOODEN_AXE);
-        axes.add(Material.STONE_AXE);
-        axes.add(Material.IRON_AXE);
-        axes.add(Material.GOLDEN_AXE);
-        axes.add(Material.DIAMOND_AXE);
-        axes.add(Material.NETHERITE_AXE); // 獄髓斧
+    boolean detectAxe(ItemStack item) {
+        if (item.getType() == Material.WOODEN_AXE || item.getType() == Material.STONE_AXE
+                || item.getType() == Material.IRON_AXE || item.getType() == Material.GOLDEN_AXE
+                || item.getType() == Material.DIAMOND_AXE) {
+            return true;
+        } else if (item.getType() == Material.NETHERITE_AXE) {
+            if (item.getEnchantments().containsKey(Enchantment.SILK_TOUCH)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return false;
     }
 
     boolean isStrippedLog(Material block) {
