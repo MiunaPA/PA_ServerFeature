@@ -90,6 +90,7 @@ public class StrippedLog extends SubFeature implements Listener {
         for (Wood wood : logs) {
             // 剝皮原木
             ItemStack strippedLog = new ItemStack(wood.getStrippedLog());
+            strippedLog.setAmount(2);
             NamespacedKey strippedLogKey = new NamespacedKey(plugin, "pasf_log_" + wood.getName());
             ShapedRecipe strippedLogRecipe = new ShapedRecipe(strippedLogKey, strippedLog);
             strippedLogRecipe.shape("NN");
