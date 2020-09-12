@@ -13,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.CartographyInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -53,15 +54,21 @@ public class ItemSign extends SubFeature implements Listener, CommandExecutor, T
             if (item.getType() == Material.FILLED_MAP) {
                 ItemMeta meta = item.getItemMeta();
                 if (meta.hasLore()) {
-                    if (ChatColor.stripColor(meta.getLore().get(0)).equals("已署名")) {
+                    if (!event.getWhoClicked().getName().equals(detectSignName(meta))
+                            && detectSignName(meta) != null) {
                         if (event.getSlot() == 2) {
-                            event.getWhoClicked().sendMessage(ChatColor.RED + "已署名的地圖是不能複製的");
+                            event.getWhoClicked().sendMessage(ChatColor.RED + "你不是地圖署名持有人 無法複製地圖");
                             event.getWhoClicked().closeInventory();
                         }
                     }
                 }
             }
         }
+    }
+
+    @EventHandler
+    public void onPlayerDropItem(PlayerDropItemEvent event) {
+        System.out.println(detectSignName(event.getItemDrop().getItemStack().getItemMeta()));
     }
 
     @Override
@@ -177,5 +184,18 @@ public class ItemSign extends SubFeature implements Listener, CommandExecutor, T
         } else {
             player.sendMessage(ChatColor.RED + "本物品沒有署名!");
         }
+    }
+
+    String detectSignName(ItemMeta meta) {
+        if (meta.hasLore()) {
+            List<String> lore = meta.getLore();
+            Integer row = lore.size();
+            for (int i = 0; i < row - 1; i++) {
+                if (ChatColor.stripColor(lore.get(i)).equals("已署名")) {
+                    return ChatColor.stripColor(lore.get(i + 1));
+                }
+            }
+        }
+        return null;
     }
 }
