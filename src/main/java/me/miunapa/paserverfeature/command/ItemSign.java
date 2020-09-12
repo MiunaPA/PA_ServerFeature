@@ -13,7 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.CartographyInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -38,10 +38,8 @@ public class ItemSign extends SubFeature implements Listener, CommandExecutor, T
             ItemStack item = event.getInventory().getResult();
             if (item.getType() == Material.FILLED_MAP) {
                 ItemMeta meta = item.getItemMeta();
-                if (meta.hasLore()) {
-                    if (ChatColor.stripColor(meta.getLore().get(0)).equals("已署名")) {
-                        item.setAmount(1);
-                    }
+                if (hasSign(meta)) {
+                    item.setAmount(1);
                 }
             }
         }
@@ -53,22 +51,39 @@ public class ItemSign extends SubFeature implements Listener, CommandExecutor, T
             ItemStack item = event.getCurrentItem();
             if (item.getType() == Material.FILLED_MAP) {
                 ItemMeta meta = item.getItemMeta();
-                if (meta.hasLore()) {
-                    if (!event.getWhoClicked().getName().equals(detectSignName(meta))
-                            && detectSignName(meta) != null) {
-                        if (event.getSlot() == 2) {
-                            event.getWhoClicked().sendMessage(ChatColor.RED + "你不是地圖署名持有人 無法複製地圖");
-                            event.getWhoClicked().closeInventory();
-                        }
+                Player player = (Player) event.getWhoClicked();
+                if (!isOwnSign(meta, player.getName())) {
+                    if (event.getSlot() == 2) {
+                        player.sendMessage(ChatColor.RED + "你不是地圖署名持有人 無法複製地圖");
+                        Bukkit.getScheduler().runTask(plugin, new Runnable() {
+                            @Override
+                            public void run() {
+                                player.closeInventory();
+                            }
+                        });
+                    }
+                }
+
+            }
+        } else if (event.getClickedInventory() instanceof AnvilInventory) {
+            ItemStack item = event.getCurrentItem();
+            if (item.getType() != Material.AIR) {
+                ItemMeta meta = item.getItemMeta();
+                Player player = (Player) event.getWhoClicked();
+                if (!isOwnSign(meta, player.getName())) {
+                    if (event.getSlot() == 2) {
+                        player.sendMessage(ChatColor.RED + "你不是該物品的署名持有人 無法使用鐵砧");
+                        player.setLevel(player.getLevel() + 1);
+                        Bukkit.getScheduler().runTask(plugin, new Runnable() {
+                            @Override
+                            public void run() {
+                                player.closeInventory();
+                            }
+                        });
                     }
                 }
             }
         }
-    }
-
-    @EventHandler
-    public void onPlayerDropItem(PlayerDropItemEvent event) {
-        System.out.println(detectSignName(event.getItemDrop().getItemStack().getItemMeta()));
     }
 
     @Override
@@ -123,26 +138,17 @@ public class ItemSign extends SubFeature implements Listener, CommandExecutor, T
         PlayerInventory inv = player.getInventory();
         ItemStack item = inv.getItemInMainHand();
         ItemMeta meta = item.getItemMeta();
-        List<String> lore = new ArrayList<String>();
-        if (meta.hasLore()) {
-            lore = meta.getLore();
-            if (lore.size() == 2) {
-                if (ChatColor.stripColor(lore.get(0)).equals("已署名")) {
-                    player.sendMessage(ChatColor.RED + "本物品已經署名過了!");
-                } else {
-                    player.sendMessage(ChatColor.RED + "本身帶有物品說明的物品不能署名!");
-                }
-            } else {
-                player.sendMessage(ChatColor.RED + "本身帶有物品說明的物品不能署名!");
-            }
-        } else {
-            lore.add(ChatColor.GRAY + "已署名");
-            lore.add(ChatColor.GRAY + player.getName());
-            meta.setLore(lore);
-            item.setItemMeta(meta);
-            player.updateInventory();
-            player.sendMessage(ChatColor.GREEN + "已將物品署名! " + ChatColor.RED + player.getName());
+        if (hasSign(meta)) {
+            player.sendMessage(ChatColor.RED + "本物品已經署名過了!");
+            return;
         }
+        List<String> lore = meta.getLore();
+        lore.add(ChatColor.GRAY + "已署名");
+        lore.add(ChatColor.GRAY + player.getName());
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        player.updateInventory();
+        player.sendMessage(ChatColor.GREEN + "已將物品署名! " + ChatColor.RED + player.getName());
     }
 
     void signRemove(Player player) {
@@ -153,40 +159,58 @@ public class ItemSign extends SubFeature implements Listener, CommandExecutor, T
         PlayerInventory inv = player.getInventory();
         ItemStack item = inv.getItemInMainHand();
         ItemMeta meta = item.getItemMeta();
-        List<String> lore = new ArrayList<String>();
-        if (meta.hasLore()) {
-            lore = meta.getLore();
-            if (lore.size() == 2) {
-                if (ChatColor.stripColor(lore.get(0)).equals("已署名")) {
-                    if (ChatColor.stripColor(lore.get(1)).equals(player.getName())) {
-                        lore.clear();
-                        meta.setLore(lore);
-                        item.setItemMeta(meta);
-                        player.updateInventory();
-                        player.sendMessage(ChatColor.LIGHT_PURPLE + "已將物品解除署名!");
-                    } else {
-                        if (forceRemove) {
-                            lore.clear();
-                            meta.setLore(lore);
-                            item.setItemMeta(meta);
-                            player.updateInventory();
-                            player.sendMessage(ChatColor.LIGHT_PURPLE + "已將物品強制解除署名!");
-                        } else {
-                            player.sendMessage(ChatColor.RED + "只能由署名的玩家解除署名");
-                        }
-                    }
-                } else {
-                    player.sendMessage(ChatColor.RED + "本身帶有物品說明的物品不能署名! 因此也沒辦法解除署名!");
-                }
-            } else {
-                player.sendMessage(ChatColor.RED + "本物品沒有署名!");
-            }
-        } else {
+        if (!hasSign(meta)) {
             player.sendMessage(ChatColor.RED + "本物品沒有署名!");
+            return;
+        }
+        if (!isOwnSign(meta, player.getName())) {
+            if (forceRemove) {
+                player.sendMessage(ChatColor.RED + "強制解除署名模式");
+            } else {
+                player.sendMessage(ChatColor.RED + "只能由署名的玩家解除署名");
+                return;
+            }
+        }
+        List<String> lore = meta.getLore();
+        Integer row = lore.size();
+        for (int i = 0; i < row - 1; i++) {
+            if (ChatColor.stripColor(lore.get(i)).equals("已署名")) {
+                lore.remove(i);
+                lore.remove(i);
+                meta.setLore(lore);
+                item.setItemMeta(meta);
+                player.updateInventory();
+                player.sendMessage(ChatColor.LIGHT_PURPLE + "已將物品解除署名!");
+                return;
+            }
         }
     }
 
-    String detectSignName(ItemMeta meta) {
+    boolean isOwnSign(ItemMeta meta, String playerName) {
+        if (!hasSign(meta)) {
+            return true;
+        }
+        if (getSignName(meta).equals(playerName)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    boolean hasSign(ItemMeta meta) {
+        if (meta.hasLore()) {
+            List<String> lore = meta.getLore();
+            Integer row = lore.size();
+            for (int i = 0; i < row - 1; i++) {
+                if (ChatColor.stripColor(lore.get(i)).equals("已署名")) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    String getSignName(ItemMeta meta) {
         if (meta.hasLore()) {
             List<String> lore = meta.getLore();
             Integer row = lore.size();
