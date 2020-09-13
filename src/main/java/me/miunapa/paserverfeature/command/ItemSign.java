@@ -71,7 +71,7 @@ public class ItemSign extends SubFeature implements Listener, CommandExecutor, T
             if (item.getType() == Material.FILLED_MAP) {
                 ItemMeta meta = item.getItemMeta();
                 Player player = (Player) event.getWhoClicked();
-                if (!isOwnSign(meta, player.getName())) {
+                if (!isOwnSign(meta, player)) {
                     if (event.getSlot() == 0) {
                         player.sendMessage(ChatColor.RED + "你不是地圖署名持有人 無法複製地圖");
                         Bukkit.getScheduler().runTask(plugin, new Runnable() {
@@ -172,7 +172,7 @@ public class ItemSign extends SubFeature implements Listener, CommandExecutor, T
             player.sendMessage(ChatColor.RED + "本物品沒有署名!");
             return;
         }
-        if (!isOwnSign(meta, player.getName())) {
+        if (!isOwnSign(meta, player)) {
             if (forceRemove) {
                 player.sendMessage(ChatColor.RED + "強制解除署名模式");
             } else {
@@ -203,7 +203,7 @@ public class ItemSign extends SubFeature implements Listener, CommandExecutor, T
             player.sendMessage(ChatColor.RED + "本物品沒有署名 無法署名發行");
             return;
         }
-        if (!isOwnSign(meta, player.getName())) {
+        if (!isOwnSign(meta, player)) {
             player.sendMessage(ChatColor.RED + "只能由署名的玩家來做署名發行");
             return;
         }
@@ -217,14 +217,19 @@ public class ItemSign extends SubFeature implements Listener, CommandExecutor, T
         player.sendMessage(ChatColor.LIGHT_PURPLE + "已將物品署名發行!");
     }
 
-    boolean isOwnSign(ItemMeta meta, String playerName) {
+    boolean isOwnSign(ItemMeta meta, Player player) {
+        String playerName = player.getName();
         if (!hasSign(meta)) {
             return true;
         }
         if (getSignName(meta).equals(playerName)) {
             return true;
         } else {
-            return false;
+            if (player.hasPermission("paserverfeature.signatureforce") || player.isOp()) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
