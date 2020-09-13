@@ -8,6 +8,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -39,7 +40,7 @@ public class ItemSign extends SubFeature implements Listener, CommandExecutor, T
             if (item.getType() == Material.FILLED_MAP) {
                 ItemMeta meta = item.getItemMeta();
                 if (hasSign(meta)) {
-                    if (!event.getView().getPlayer().getName().equals(getSignName(meta))) {
+                    if (!isOwnSign(meta, event.getView().getPlayer())) {
                         item.setAmount(1);
                     }
                 }
@@ -54,7 +55,7 @@ public class ItemSign extends SubFeature implements Listener, CommandExecutor, T
             if (item.getType() != Material.AIR) {
                 ItemMeta meta = item.getItemMeta();
                 if (hasSign(meta)) {
-                    if (!event.getView().getPlayer().getName().equals(getSignName(meta))) {
+                    if (!isOwnSign(meta, event.getView().getPlayer())) {
                         event.getView().close();
                         event.getView().getPlayer()
                                 .sendMessage(ChatColor.RED + "你不是物品署名持有人 無法使用鐵砧");
@@ -215,6 +216,10 @@ public class ItemSign extends SubFeature implements Listener, CommandExecutor, T
         item.setItemMeta(meta);
         player.updateInventory();
         player.sendMessage(ChatColor.LIGHT_PURPLE + "已將物品署名發行!");
+    }
+
+    boolean isOwnSign(ItemMeta meta, HumanEntity player) {
+        return isOwnSign(meta, (Player) player);
     }
 
     boolean isOwnSign(ItemMeta meta, Player player) {
