@@ -211,7 +211,7 @@ public class ItemSign extends SubFeature implements Listener, CommandExecutor, T
             player.sendMessage(ChatColor.RED + "物品沒有自訂命名 請先命名完再發行");
             return;
         }
-        meta.setDisplayName(ChatColor.RESET + meta.getDisplayName());
+        meta.setDisplayName(ChatColor.RESET + "" + ChatColor.WHITE + meta.getDisplayName());
         item.setItemMeta(meta);
         player.updateInventory();
         player.sendMessage(ChatColor.LIGHT_PURPLE + "已將物品署名發行!");
