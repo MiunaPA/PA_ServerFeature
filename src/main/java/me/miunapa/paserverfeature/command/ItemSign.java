@@ -68,19 +68,24 @@ public class ItemSign extends SubFeature implements Listener, CommandExecutor, T
     @EventHandler
     public void onInventoryClickEvent(InventoryClickEvent event) {
         if (event.getClickedInventory() instanceof CartographyInventory) {
-            ItemStack item = event.getCursor();
-            if (item.getType() == Material.FILLED_MAP) {
-                ItemMeta meta = item.getItemMeta();
+            ItemStack cursorItem = event.getCursor();
+            ItemStack currentItem = event.getCurrentItem();
+            if (cursorItem.getType() == Material.FILLED_MAP
+                    || currentItem.getType() == Material.FILLED_MAP) {
+                ItemMeta cursorMeta = cursorItem.getItemMeta();
+                ItemMeta currentMeta = currentItem.getItemMeta();
                 Player player = (Player) event.getWhoClicked();
-                if (!isOwnSign(meta, player)) {
+                if (!isOwnSign(cursorMeta, player) || !isOwnSign(currentMeta, player)) {
                     if (event.getSlot() == 0 || event.getSlot() == 2) {
                         player.sendMessage(ChatColor.RED + "你不是地圖署名持有人 無法複製地圖");
+                        event.setCancelled(true);
                         Bukkit.getScheduler().runTask(plugin, new Runnable() {
                             @Override
                             public void run() {
                                 player.closeInventory();
                             }
                         });
+                        return;
                     }
                 }
             }
@@ -239,6 +244,9 @@ public class ItemSign extends SubFeature implements Listener, CommandExecutor, T
     }
 
     boolean hasSign(ItemMeta meta) {
+        if (meta == null) {
+            return false;
+        }
         if (meta.hasLore()) {
             List<String> lore = meta.getLore();
             Integer row = lore.size();
