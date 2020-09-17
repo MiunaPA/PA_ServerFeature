@@ -73,7 +73,7 @@ public class ItemSign extends SubFeature implements Listener, CommandExecutor, T
                 ItemMeta meta = item.getItemMeta();
                 Player player = (Player) event.getWhoClicked();
                 if (!isOwnSign(meta, player)) {
-                    if (event.getSlot() == 0) {
+                    if (event.getSlot() == 0 || event.getSlot() == 2) {
                         player.sendMessage(ChatColor.RED + "你不是地圖署名持有人 無法複製地圖");
                         Bukkit.getScheduler().runTask(plugin, new Runnable() {
                             @Override
