@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>me.miunapa.paserverfeature</groupId>
     <artifactId>PA_ServerFeature</artifactId>
-    <version>1.7.7</version>
+    <version>1.7.8</version>
     <name>PA_ServerFeature</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

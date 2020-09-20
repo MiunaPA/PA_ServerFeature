@@ -65,7 +65,8 @@ public class Roll extends SubFeature implements CommandExecutor {
             }
             List<Player> playerList = new ArrayList<Player>();
             for (Player other : Bukkit.getOnlinePlayers()) {
-                if (other.getLocation().distance(player.getLocation()) <= 20) {
+                if (other.getLocation().distance(player.getLocation()) <= 20
+                        && other.getWorld() == player.getWorld()) {
                     playerList.add(other);
                 }
             }
