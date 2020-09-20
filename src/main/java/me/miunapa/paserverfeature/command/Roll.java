@@ -72,7 +72,9 @@ public class Roll extends SubFeature implements CommandExecutor {
                     }
                 }
             }
-            Integer number = new Random().nextInt(max) + min;
+            Random random = new Random();
+            random.setSeed(System.currentTimeMillis());
+            Integer number = random.nextInt(max) + min;
             TextComponent tc = new TextComponent(ChatColor.GREEN + player.getName() + ChatColor.GOLD
                     + " 骰出了 " + ChatColor.LIGHT_PURPLE + number.toString());
             HoverEvent hoverEvent = new HoverEvent(Action.SHOW_TEXT, createContentText(""));
