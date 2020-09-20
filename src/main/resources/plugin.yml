@@ -1,6 +1,6 @@
 main: me.miunapa.paserverfeature.Main
 name: PA_ServerFeature
-version: 1.7.6
+version: 1.7.7
 api-version: 1.16
 
 commands:
@@ -44,6 +44,10 @@ commands:
     description: 查詢EntitySpawn
     usage: /es
     permission: paserverfeature.entityspawn
+  roll:
+    description: roll
+    usage: /roll
+    permission: paserverfeature.roll
 permissions:
   paserverfeature.hat:
     default: true
@@ -65,3 +69,5 @@ permissions:
     default: op
   paserverfeature.entityspawn:
     default: op
+  paserverfeature.roll:
+    default: true
