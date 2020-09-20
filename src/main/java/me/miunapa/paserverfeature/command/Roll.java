@@ -39,7 +39,6 @@ public class Roll extends SubFeature implements CommandExecutor {
                 player.sendActionBar(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "請手持一個青金石才能使用");
                 return true;
             }
-            item.setAmount(item.getAmount() - 1);
             int min = 1;
             int max = 6;
             if (args.length != 0) {
@@ -63,6 +62,7 @@ public class Roll extends SubFeature implements CommandExecutor {
                     return true;
                 }
             }
+            item.setAmount(item.getAmount() - 1);
             List<Player> playerList = new ArrayList<Player>();
             for (Player other : Bukkit.getOnlinePlayers()) {
                 if (other.getWorld() == player.getWorld()) {
