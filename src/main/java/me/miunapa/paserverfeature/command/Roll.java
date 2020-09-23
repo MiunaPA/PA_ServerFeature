@@ -36,7 +36,7 @@ public class Roll extends SubFeature implements CommandExecutor {
             Player player = (Player) sender;
             ItemStack item = player.getInventory().getItemInMainHand();
             if (item.getType() != Material.LAPIS_LAZULI) {
-                player.sendActionBar(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "請手持一個青金石才能使用");
+                player.sendActionBar(ChatColor.DARK_RED + "請手持青金石1個 才能使用");
                 return true;
             }
             int min = 1;
@@ -47,28 +47,32 @@ public class Roll extends SubFeature implements CommandExecutor {
                         min = Integer.parseInt(args[0]);
                         max = Integer.parseInt(args[1]);
                         if (min >= max) {
-                            player.sendActionBar(
-                                    ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "最大值需大於最小值");
+                            player.sendActionBar(ChatColor.DARK_PURPLE + "最大值需大於最小值");
+                            return true;
+                        }
+                        if (min < 1 || max < 1) {
+                            player.sendActionBar(ChatColor.DARK_PURPLE + "最大值與最小值需>=1");
                             return true;
                         }
                     } catch (Exception e) {
-                        player.sendActionBar(
-                                ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "最小值與最大值 需輸入整數數字才行");
+                        player.sendActionBar(ChatColor.DARK_PURPLE + "最小值與最大值 需輸入整數數字才行");
                         return true;
                     }
                 } else {
-                    player.sendActionBar(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "若要指定數值 請輸入 "
-                            + ChatColor.RED + "/roll <最小值> <最大值>");
+                    player.sendActionBar(ChatColor.DARK_PURPLE + "若要指定數值 請輸入 " + ChatColor.RED
+                            + "/roll <最小值> <最大值>");
                     return true;
                 }
             }
             item.setAmount(item.getAmount() - 1);
             List<Player> playerList = new ArrayList<Player>();
+            String playerListText = "";
             for (Player other : Bukkit.getOnlinePlayers()) {
                 if (other.getWorld() == player.getWorld()) {
                     if (other.getLocation().distance(player.getLocation()) <= 20
                             && other.getWorld() == player.getWorld()) {
                         playerList.add(other);
+                        playerListText += other.getName() + " ";
                     }
                 }
             }
@@ -78,17 +82,14 @@ public class Roll extends SubFeature implements CommandExecutor {
             TextComponent tc = new TextComponent(ChatColor.GREEN + player.getName() + ChatColor.GOLD
                     + " 骰出了 " + ChatColor.LIGHT_PURPLE + number.toString());
             HoverEvent hoverEvent = new HoverEvent(Action.SHOW_TEXT, createContentText(""));
-            hoverEvent.addContent(createContentText("範圍 : ", ChatColor.AQUA));
-            hoverEvent.addContent(createContentText(min + "-" + max, ChatColor.RED));
-            String playerListText = "";
-            for (Player p : playerList) {
-                playerListText += p.getName() + " ";
-            }
+            hoverEvent.addContent(createContentText("數值 : ", ChatColor.AQUA));
+            hoverEvent.addContent(createContentText(number.toString(), ChatColor.YELLOW));
+            hoverEvent.addContent(createContentText(" (" + min + "-" + max + ")", ChatColor.RED));
             hoverEvent.addContent(createContentText("\n對象 : ", ChatColor.GREEN));
             hoverEvent.addContent(createContentText(playerListText, ChatColor.GRAY));
             hoverEvent.addContent(createContentText(
-                    "\n時間 : " + new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()),
-                    ChatColor.WHITE));
+                    "\n時間 : " + new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SS").format(new Date()),
+                    ChatColor.DARK_GRAY));
             tc.setHoverEvent(hoverEvent);
             for (Player p : playerList) {
                 p.sendMessage(tc);
