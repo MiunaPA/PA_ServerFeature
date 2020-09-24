@@ -5,6 +5,7 @@ NewPlayer:
   paper: true
 ProtectVillage:
   zombie: false
+  lightning: true
 EntityBreed:
   Villager: false
 EntitySpawn:
