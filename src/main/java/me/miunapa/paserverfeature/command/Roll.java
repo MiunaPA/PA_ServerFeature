@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -41,29 +40,44 @@ public class Roll extends SubFeature implements CommandExecutor {
             }
             int min = 1;
             int max = 6;
+            int repeat = 1;
+            // 數值判斷
             if (args.length != 0) {
-                if (args.length == 2) {
+                if (args.length >= 2) {
                     try {
                         min = Integer.parseInt(args[0]);
                         max = Integer.parseInt(args[1]);
-                        if (min >= max) {
-                            player.sendActionBar(ChatColor.DARK_PURPLE + "最大值需大於最小值");
-                            return true;
-                        }
-                        if (min < 1 || max < 1) {
-                            player.sendActionBar(ChatColor.DARK_PURPLE + "最大值與最小值需>=1");
-                            return true;
-                        }
-                    } catch (Exception e) {
+                    } catch (NumberFormatException e) {
                         player.sendActionBar(ChatColor.DARK_PURPLE + "最小值與最大值 需輸入整數數字才行");
                         return true;
                     }
+                    if (args.length == 3) {
+                        try {
+                            repeat = Integer.parseInt(args[2]);
+                        } catch (Exception e) {
+                            player.sendActionBar(ChatColor.DARK_PURPLE + "次數需輸入整數數字才行(1-10)");
+                            return true;
+                        }
+                    }
                 } else {
                     player.sendActionBar(ChatColor.DARK_PURPLE + "若要指定數值 請輸入 " + ChatColor.RED
-                            + "/roll <最小值> <最大值>");
+                            + "/roll <最小值> <最大值> [重複次數]");
                     return true;
                 }
             }
+            if (min >= max) {
+                player.sendActionBar(ChatColor.DARK_PURPLE + "最大值需大於最小值");
+                return true;
+            }
+            if (min < 1 || max < 1) {
+                player.sendActionBar(ChatColor.DARK_PURPLE + "最大值與最小值需>=1");
+                return true;
+            }
+            if (repeat < 1 || repeat > 10) {
+                player.sendActionBar(ChatColor.DARK_PURPLE + "次數只能在1-10次");
+                return true;
+            }
+            // 程序開始
             item.setAmount(item.getAmount() - 1);
             List<Player> playerList = new ArrayList<Player>();
             String playerListText = "";
@@ -76,15 +90,18 @@ public class Roll extends SubFeature implements CommandExecutor {
                     }
                 }
             }
-            Random random = new Random();
-            random.setSeed(System.currentTimeMillis());
-            Integer number = random.nextInt(max) + min;
+            String numberText = "";
+            for (int i = 0; i < repeat; i++) {
+                Integer number = getRandom(min, max);
+                numberText += number.toString() + " ";
+            }
             TextComponent tc = new TextComponent(ChatColor.GREEN + player.getName() + ChatColor.GOLD
-                    + " 骰出了 " + ChatColor.LIGHT_PURPLE + number.toString());
+                    + " 骰出了 " + ChatColor.LIGHT_PURPLE + numberText);
             HoverEvent hoverEvent = new HoverEvent(Action.SHOW_TEXT, createContentText(""));
             hoverEvent.addContent(createContentText("數值 : ", ChatColor.AQUA));
-            hoverEvent.addContent(createContentText(number.toString(), ChatColor.YELLOW));
-            hoverEvent.addContent(createContentText(" (" + min + "-" + max + ")", ChatColor.RED));
+            hoverEvent.addContent(createContentText(numberText, ChatColor.YELLOW));
+            hoverEvent.addContent(createContentText("\n範圍 : ", ChatColor.LIGHT_PURPLE));
+            hoverEvent.addContent(createContentText(min + "-" + max, ChatColor.RED));
             hoverEvent.addContent(createContentText("\n對象 : ", ChatColor.GREEN));
             hoverEvent.addContent(createContentText(playerListText, ChatColor.GRAY));
             hoverEvent.addContent(createContentText(
@@ -106,5 +123,9 @@ public class Roll extends SubFeature implements CommandExecutor {
 
     Text createContentText(String text, ChatColor color) {
         return new Text(new ComponentBuilder(text).color(color).create());
+    }
+
+    int getRandom(int min, int max) {
+        return (int) (Math.random() * (max - min + 1)) + min;
     }
 }
