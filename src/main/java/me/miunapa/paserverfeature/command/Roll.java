@@ -35,7 +35,7 @@ public class Roll extends SubFeature implements CommandExecutor {
             Player player = (Player) sender;
             ItemStack item = player.getInventory().getItemInMainHand();
             if (item.getType() != Material.LAPIS_LAZULI) {
-                player.sendActionBar(ChatColor.DARK_RED + "請手持青金石1個 才能使用");
+                player.sendActionBar(ChatColor.DARK_RED + "請先手持青金石 才能使用");
                 return true;
             }
             int min = 1;
@@ -77,8 +77,13 @@ public class Roll extends SubFeature implements CommandExecutor {
                 player.sendActionBar(ChatColor.DARK_PURPLE + "次數只能在1-10次");
                 return true;
             }
+            if (item.getAmount() < repeat) {
+                player.sendActionBar(ChatColor.DARK_RED + "青金石不足 需要 " + ChatColor.YELLOW + repeat
+                        + ChatColor.DARK_RED + "個 才能使用");
+                return true;
+            }
             // 程序開始
-            item.setAmount(item.getAmount() - 1);
+            item.setAmount(item.getAmount() - repeat);
             List<Player> playerList = new ArrayList<Player>();
             String playerListText = "";
             for (Player other : Bukkit.getOnlinePlayers()) {
