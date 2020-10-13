@@ -6,7 +6,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import me.miunapa.paserverfeature.command.*;
 import me.miunapa.paserverfeature.entity.*;
 import me.miunapa.paserverfeature.feature.*;
-import me.miunapa.paserverfeature.item.*;
 import me.miunapa.paserverfeature.player.*;
 
 
@@ -41,12 +40,7 @@ public class Main extends JavaPlugin {
         features.add(new StrippedLog());
         features.add(new TurtleCount());
         features.add(new WitherDispense());
-        // item
-        features.add(new FoxTowel());
-        features.add(new LoliSoup());
-        features.add(new RaidItem());
         // player
-        features.add(new NewPlayer());
         features.add(new PlayerDeath());
     }
 

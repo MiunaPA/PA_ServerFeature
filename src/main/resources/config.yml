@@ -1,8 +1,6 @@
 DeathClearExp: true
 Dispense:
   WitherSkull: false
-NewPlayer:
-  paper: true
 ProtectVillage:
   zombie: false
   lightning: true
@@ -22,5 +20,4 @@ rule:
 StrippedLog: false
 PVPCoolDown: 30
 NetheriteEquipment: false
-RaidItem: false
 PVPChange: true
