@@ -1,7 +1,6 @@
 package me.miunapa.paserverfeature.feature;
 
 import org.bukkit.Material;
-import org.bukkit.block.Beehive;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -32,11 +31,23 @@ public class BeeCount extends SubFeature implements Listener {
                 Block block = event.getClickedBlock();
                 if (block.getType().equals(Material.BEEHIVE)
                         || block.getType().equals(Material.BEE_NEST)) {
-                    Beehive beehive = (Beehive) (block.getState());
-                    player.sendActionBar(ChatColor.GOLD + "這個蜂箱裡面有 " + ChatColor.YELLOW
-                            + beehive.getEntityCount() + ChatColor.GOLD + " 隻蜜蜂" + ChatColor.RED
-                            + "(x:" + beehive.getX() + " y:" + beehive.getY() + " z:"
-                            + beehive.getZ() + ")");
+                    org.bukkit.block.Beehive beehiveState =
+                            (org.bukkit.block.Beehive) (block.getState());
+                    org.bukkit.block.data.type.Beehive beehiveData =
+                            (org.bukkit.block.data.type.Beehive) block.getBlockData();
+                    String honeyText = "";
+                    if (beehiveData.getHoneyLevel() == beehiveData.getMaximumHoneyLevel()) {
+                        honeyText = "蜂蜜已滿";
+                    } else if (beehiveData.getHoneyLevel() == 0) {
+                        honeyText = "沒有蜂蜜";
+                    } else {
+                        honeyText = "蜂蜜量:" + beehiveData.getHoneyLevel() + "/"
+                                + beehiveData.getMaximumHoneyLevel();
+                    }
+                    player.sendActionBar(ChatColor.LIGHT_PURPLE + "蜂箱裡面有 " + ChatColor.RED + "蜜蜂x"
+                            + beehiveState.getEntityCount() + "," + honeyText + ChatColor.GRAY
+                            + " [x:" + beehiveState.getX() + " y:" + beehiveState.getY() + " z:"
+                            + beehiveState.getZ() + "]");
                 }
             }
         }
