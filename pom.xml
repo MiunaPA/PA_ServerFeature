@@ -38,6 +38,7 @@
                     <include>plugin.yml</include>
                     <include>config.yml</include>
                 </includes>
+                <filtering>true</filtering>
             </resource>
         </resources>
         <plugins>
