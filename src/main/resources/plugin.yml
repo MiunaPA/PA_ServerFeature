@@ -1,6 +1,7 @@
 main: me.miunapa.paserverfeature.Main
-name: PA_ServerFeature
-version: 1.10.2
+name: ${project.artifactId}
+author: MiunaPA
+version: ${project.version}
 api-version: 1.16
 
 commands:

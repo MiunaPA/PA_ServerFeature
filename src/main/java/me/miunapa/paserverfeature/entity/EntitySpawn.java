@@ -108,8 +108,6 @@ public class EntitySpawn extends SubFeature implements Listener, CommandExecutor
                             entity.setHealth(0.0);
                             clearCount += 1;
                         }
-                    } else if (e.getType() == EntityType.SNOWBALL) {
-                        e.remove();
                     }
                 }
                 broadcastActionBar("&c已自動清潔殭屍豬布林 : &a" + clearCount.toString());
@@ -118,6 +116,7 @@ public class EntitySpawn extends SubFeature implements Listener, CommandExecutor
                         @Override
                         public void run() {
                             cleanItemProcess();
+                            cleanSnowballAndExp();
                         }
                     }, 400);
                 }
@@ -174,6 +173,38 @@ public class EntitySpawn extends SubFeature implements Listener, CommandExecutor
             }
         }
         broadcastActionBar("&d已清除指定掉落物 共 &c" + cleanCount + " &d個");
+    }
+
+    void cleanSnowballAndExp() {
+        Integer snowballCount = 0;
+        Integer expOrbCount = 0;
+        for (World w : Bukkit.getWorlds()) {
+            for (Entity e : w.getEntities()) {
+                if (e.getType() == EntityType.SNOWBALL) {
+                    snowballCount += 1;
+                } else if (e.getType() == EntityType.EXPERIENCE_ORB) {
+                    expOrbCount += 1;
+                }
+            }
+        }
+        if (snowballCount >= 100) {
+            for (World w : Bukkit.getWorlds()) {
+                for (Entity e : w.getEntities()) {
+                    if (e.getType() == EntityType.SNOWBALL) {
+                        e.remove();
+                    }
+                }
+            }
+        }
+        if (expOrbCount >= 100) {
+            for (World w : Bukkit.getWorlds()) {
+                for (Entity e : w.getEntities()) {
+                    if (e.getType() == EntityType.EXPERIENCE_ORB) {
+                        e.remove();
+                    }
+                }
+            }
+        }
     }
 
     void broadcastActionBar(String text) {
