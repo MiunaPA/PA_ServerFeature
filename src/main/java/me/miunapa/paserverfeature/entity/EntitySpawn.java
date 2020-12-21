@@ -137,7 +137,7 @@ public class EntitySpawn extends SubFeature implements Listener, CommandExecutor
             }
         }
         if (count >= 400) {
-            broadcastActionBar("&1偵測到掉落物過多!&7(" + count + ") &4即將在 30 秒後清除地板上的指定掉落物");
+            broadcastActionBar("&1偵測到掉落物過多!&7(" + count + ") &4即將在 30 秒後清除地板上的指定掉落物", true);
             Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
                 @Override
                 public void run() {
@@ -172,7 +172,7 @@ public class EntitySpawn extends SubFeature implements Listener, CommandExecutor
                 }
             }
         }
-        broadcastActionBar("&d已清除指定掉落物 共 &c" + cleanCount + " &d個");
+        broadcastActionBar("&d已清除指定掉落物 共 &c" + cleanCount + " &d個", true);
     }
 
     void cleanSnowballAndExp() {
@@ -211,5 +211,12 @@ public class EntitySpawn extends SubFeature implements Listener, CommandExecutor
         for (Player player : Bukkit.getServer().getOnlinePlayers()) {
             player.sendActionBar(ChatColor.translateAlternateColorCodes('&', text));
         }
+    }
+
+    void broadcastActionBar(String text, boolean showInConsole) {
+        for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+            player.sendActionBar(ChatColor.translateAlternateColorCodes('&', text));
+        }
+        plugin.getLogger().info(text);
     }
 }
