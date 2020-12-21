@@ -217,6 +217,6 @@ public class EntitySpawn extends SubFeature implements Listener, CommandExecutor
         for (Player player : Bukkit.getServer().getOnlinePlayers()) {
             player.sendActionBar(ChatColor.translateAlternateColorCodes('&', text));
         }
-        plugin.getLogger().info(text);
+        plugin.getLogger().info(ChatColor.translateAlternateColorCodes('&', text));
     }
 }
