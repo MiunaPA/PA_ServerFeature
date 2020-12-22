@@ -21,3 +21,4 @@ StrippedLog: false
 PVPCoolDown: 30
 NetheriteEquipment: false
 PVPChange: true
+SnowballDamage: 1.0

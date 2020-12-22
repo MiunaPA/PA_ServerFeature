@@ -18,6 +18,7 @@ import org.bukkit.entity.LightningStrike;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
+import org.bukkit.entity.Snowball;
 import org.bukkit.entity.ThrownPotion;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -113,8 +114,8 @@ public class PVP extends SubFeature implements Listener, CommandExecutor {
         String damagerUUID = damager.getUniqueId().toString();
         String injuredUUID = injured.getUniqueId().toString();
         if (damager.hasPermission("paserverfeature.pvpbypass")) {
-            damager.sendActionBar(ChatColor.DARK_RED + "PVP Bypass " + injured.getName() + " ("
-                    + ChatColor.GRAY + typeMessage + ")");
+            damager.sendActionBar(ChatColor.DARK_RED + "PVP Bypass " + ChatColor.YELLOW
+                    + injured.getName() + ChatColor.GRAY + " (" + typeMessage + ")");
             return false;
         }
         if (!pvp.getBoolean(injuredUUID) && !pvp.getBoolean(damagerUUID)) {
@@ -149,12 +150,20 @@ public class PVP extends SubFeature implements Listener, CommandExecutor {
             event.setCancelled(pvpDisableDetect((Player) event.getDamager(),
                     (Player) event.getEntity(), "直接攻擊"));
         } else if (event.getDamager() instanceof Projectile) {
-            Projectile arrow = (Projectile) event.getDamager();
-            if (arrow.getShooter() instanceof Player && event.getEntity() instanceof Player) {
-                Player shooter = (Player) arrow.getShooter();
+            Projectile projectile = (Projectile) event.getDamager();
+            if (projectile.getShooter() instanceof Player && event.getEntity() instanceof Player) {
+                Player shooter = (Player) projectile.getShooter();
                 Player injured = (Player) event.getEntity();
-                if (shooter.getUniqueId() != injured.getUniqueId()) {
-                    event.setCancelled(pvpDisableDetect(shooter, injured, "投射物"));
+                if (projectile instanceof Snowball) {
+                    event.setDamage(config.getDouble("SnowballDamage"));
+                    if (shooter.getUniqueId() != injured.getUniqueId()) {
+                        event.setCancelled(pvpDisableDetect(shooter, injured,
+                                "雪球[" + event.getDamage() + "]"));
+                    }
+                } else {
+                    if (shooter.getUniqueId() != injured.getUniqueId()) {
+                        event.setCancelled(pvpDisableDetect(shooter, injured, "投射物"));
+                    }
                 }
             }
         } else if (event.getDamager() instanceof ThrownPotion) {
