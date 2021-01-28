@@ -13,6 +13,10 @@ commands:
     description: 戴帽子
     usage: /hat
     permission: paserverfeature.hat
+  takeoff:
+    description: 脫裝備
+    usage: /takeoff
+    permission: paserverfeature.hat
   getip:
     description: 取得玩家IP(必須在線上)
     usage: /getip

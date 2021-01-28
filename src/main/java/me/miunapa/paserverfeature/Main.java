@@ -29,6 +29,7 @@ public class Main extends JavaPlugin {
         features.add(new Rule());
         features.add(new Suicide());
         features.add(new Roll());
+        features.add(new Takeoff());
         // entity
         features.add(new EntityBreed());
         features.add(new EntitySpawn());
