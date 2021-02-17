@@ -36,6 +36,7 @@ public class Main extends JavaPlugin {
         features.add(new ProtectVillage());
         // feature
         features.add(new BeeCount());
+        features.add(new DisableNetheriteBreak());
         features.add(new NetheriteEquipment());
         features.add(new SpawnerChange());
         features.add(new StrippedLog());
