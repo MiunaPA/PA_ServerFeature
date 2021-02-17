@@ -1,5 +1,6 @@
 package me.miunapa.paserverfeature.feature;
 
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,18 +23,20 @@ public class DisableNetheriteBreak extends SubFeature implements Listener {
     }
 
     @EventHandler
-    public void onInventoryOpenEvent(BlockBreakEvent event) {
+    public void onBlockBreakEvent(BlockBreakEvent event) {
         if (event.getBlock().getWorld().getName().equals("world_nether")
-                || event.getBlock().getType() == Material.ANCIENT_DEBRIS) {
+                && event.getBlock().getType() == Material.ANCIENT_DEBRIS
+                && event.getPlayer().getGameMode() == GameMode.SURVIVAL) {
             event.getPlayer().sendMessage(ChatColor.RED + "本伺服的地獄不可挖掘遠古遺骸! 請至資源服挖掘");
             event.setDropItems(false);
         }
     }
 
     @EventHandler
-    public void onInventoryOpenEvent(BlockPlaceEvent event) {
+    public void onBlockPlaceEvent(BlockPlaceEvent event) {
         if (event.getBlock().getWorld().getName().equals("world_nether")
-                || event.getBlock().getType() == Material.ANCIENT_DEBRIS) {
+                && event.getBlock().getType() == Material.ANCIENT_DEBRIS
+                && event.getPlayer().getGameMode() == GameMode.SURVIVAL) {
             event.getPlayer().sendMessage(ChatColor.RED + "本伺服的地獄不可放下遠古遺骸! 請別在地獄放");
             event.setCancelled(true);
         }
