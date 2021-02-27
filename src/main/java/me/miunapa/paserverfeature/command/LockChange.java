@@ -48,6 +48,32 @@ public class LockChange extends SubFeature implements Listener, CommandExecutor,
                         edit = true;
                     }
                 }
+                // 修正uuid區塊
+                boolean isLockSign = false;
+                boolean updateLockSign = false;
+                for (int i = 0; i < sign.getLines().length; i++) {
+                    if ((i == 0) && (sign.getLine(0).equalsIgnoreCase("[私人]")
+                            || sign.getLine(0).equalsIgnoreCase("[更多人]")
+                            || sign.getLine(0).equalsIgnoreCase("[所有人]")
+                            || sign.getLine(0).equalsIgnoreCase("[Private]")
+                            || sign.getLine(0).equalsIgnoreCase("[More Users]")
+                            || sign.getLine(0).equalsIgnoreCase("[Everyone]"))) {
+                        isLockSign = true;
+                    }
+                    if (isLockSign) {
+                        String s = sign.getLine(i);
+                        if (s.indexOf("#") > 0) {
+                            s = s.substring(0, s.indexOf("#"));
+                            sign.setLine(i, s);
+                            updateLockSign = true;
+                            edit = true;
+                        }
+                    }
+                }
+                if (updateLockSign) {
+                    player.sendMessage(ChatColor.DARK_GREEN + "已修正此告示牌顯示問題");
+                }
+                // 修正uuid區塊
                 if (edit) {
                     sign.update();
                 }
