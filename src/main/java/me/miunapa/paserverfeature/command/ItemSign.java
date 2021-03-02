@@ -57,7 +57,7 @@ public class ItemSign extends SubFeature implements Listener, CommandExecutor, T
                 ItemMeta meta = item.getItemMeta();
                 if (hasSign(meta)) {
                     if (!isOwnSign(meta, event.getView().getPlayer())) {
-                        event.setResult(new ItemStack(Material.STONE));
+                        event.setResult(item);
                     }
                 }
             }
