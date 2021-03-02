@@ -11,6 +11,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
@@ -33,7 +34,7 @@ public class ItemSign extends SubFeature implements Listener, CommandExecutor, T
 
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
     public void onPrepareItemCraftEvent(PrepareItemCraftEvent event) {
         if (event.getRecipe() != null) {
             ItemStack item = event.getInventory().getResult();
@@ -48,7 +49,7 @@ public class ItemSign extends SubFeature implements Listener, CommandExecutor, T
         }
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
     public void onPrepareAnvilEvent(PrepareAnvilEvent event) {
         ItemStack item = event.getInventory().getFirstItem();
         if (item != null) {
@@ -56,16 +57,14 @@ public class ItemSign extends SubFeature implements Listener, CommandExecutor, T
                 ItemMeta meta = item.getItemMeta();
                 if (hasSign(meta)) {
                     if (!isOwnSign(meta, event.getView().getPlayer())) {
-                        event.getView().close();
-                        event.getView().getPlayer()
-                                .sendMessage(ChatColor.RED + "你不是物品署名持有人 無法使用鐵砧");
+                        event.setResult(new ItemStack(Material.STONE));
                     }
                 }
             }
         }
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
     public void onInventoryClickEvent(InventoryClickEvent event) {
         if (event.getClickedInventory() instanceof CartographyInventory) {
             ItemStack cursorItem = event.getCursor();
