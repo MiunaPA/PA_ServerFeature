@@ -35,21 +35,6 @@ public class ItemSign extends SubFeature implements Listener, CommandExecutor, T
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
-    public void onPrepareItemCraftEvent(PrepareItemCraftEvent event) {
-        if (event.getRecipe() != null) {
-            ItemStack item = event.getInventory().getResult();
-            if (item.getType() == Material.FILLED_MAP) {
-                ItemMeta meta = item.getItemMeta();
-                if (hasSign(meta)) {
-                    if (!isOwnSign(meta, event.getView().getPlayer())) {
-                        item.setAmount(1);
-                    }
-                }
-            }
-        }
-    }
-
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
     public void onPrepareAnvilEvent(PrepareAnvilEvent event) {
         ItemStack item = event.getInventory().getFirstItem();
         if (item != null) {
@@ -58,33 +43,6 @@ public class ItemSign extends SubFeature implements Listener, CommandExecutor, T
                 if (hasSign(meta)) {
                     if (!isOwnSign(meta, event.getView().getPlayer())) {
                         event.setResult(item);
-                    }
-                }
-            }
-        }
-    }
-
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
-    public void onInventoryClickEvent(InventoryClickEvent event) {
-        if (event.getClickedInventory() instanceof CartographyInventory) {
-            ItemStack cursorItem = event.getCursor();
-            ItemStack currentItem = event.getCurrentItem();
-            if (cursorItem.getType() == Material.FILLED_MAP
-                    || currentItem.getType() == Material.FILLED_MAP) {
-                ItemMeta cursorMeta = cursorItem.getItemMeta();
-                ItemMeta currentMeta = currentItem.getItemMeta();
-                Player player = (Player) event.getWhoClicked();
-                if (!isOwnSign(cursorMeta, player) || !isOwnSign(currentMeta, player)) {
-                    if (event.getSlot() == 0 || event.getSlot() == 2) {
-                        player.sendMessage(ChatColor.RED + "你不是地圖署名持有人 無法複製地圖");
-                        event.setCancelled(true);
-                        Bukkit.getScheduler().runTask(plugin, new Runnable() {
-                            @Override
-                            public void run() {
-                                player.closeInventory();
-                            }
-                        });
-                        return;
                     }
                 }
             }
@@ -149,6 +107,10 @@ public class ItemSign extends SubFeature implements Listener, CommandExecutor, T
         ItemMeta meta = item.getItemMeta();
         if (hasSign(meta)) {
             player.sendMessage(ChatColor.RED + "本物品已經署名過了!");
+            return;
+        }
+        if (item.getType() == Material.FILLED_MAP) {
+            player.sendMessage(ChatColor.RED + "現在地圖不能署名了 (同步的畫本身自帶防複製功能)");
             return;
         }
         List<String> lore;
