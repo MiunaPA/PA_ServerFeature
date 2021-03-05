@@ -29,20 +29,18 @@ public class DisableNetheriteBreak extends SubFeature implements Listener {
 
     @EventHandler
     public void onBlockBreakEvent(BlockBreakEvent event) {
+        Location loc = event.getBlock().getLocation();
+        if (placeList.contains(loc)) {
+            event.getPlayer().sendMessage(ChatColor.RED + "此位置被挖掘了 將無法再次挖掘遠古遺骸 " + ChatColor.GRAY
+                    + "x:" + loc.getBlockX() + " y:" + loc.getBlockY() + " z:" + loc.getBlockZ());
+            placeList.remove(loc);
+            return;
+        }
         if (event.getBlock().getWorld().getName().equals("world_nether")
                 && event.getBlock().getType() == Material.ANCIENT_DEBRIS
                 && event.getPlayer().getGameMode() == GameMode.SURVIVAL) {
-            Location loc = event.getBlock().getLocation();
-            if (placeList.contains(loc)) {
-                event.getPlayer()
-                        .sendMessage(ChatColor.RED + "此位置遠古遺骸被挖掘了 將無法再次挖掘 " + ChatColor.GRAY + "x:"
-                                + loc.getBlockX() + " y:" + loc.getBlockY() + " z:"
-                                + loc.getBlockZ());
-                placeList.remove(loc);
-            } else {
-                event.getPlayer().sendMessage(ChatColor.RED + "本伺服的地獄不可挖掘遠古遺骸! 請至資源服挖掘");
-                event.setDropItems(false);
-            }
+            event.getPlayer().sendMessage(ChatColor.RED + "本伺服的地獄不可挖掘遠古遺骸! 請至資源服挖掘");
+            event.setDropItems(false);
         }
     }
 
