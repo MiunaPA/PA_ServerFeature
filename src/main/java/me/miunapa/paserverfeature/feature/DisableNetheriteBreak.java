@@ -53,7 +53,6 @@ public class DisableNetheriteBreak extends SubFeature implements Listener {
             placeList.add(loc);
             event.getPlayer().sendMessage(ChatColor.RED + "本位置暫時可挖掘遠古遺骸 " + ChatColor.GRAY + "x:"
                     + loc.getBlockX() + " y:" + loc.getBlockY() + " z:" + loc.getBlockZ());
-            event.setCancelled(true);
         }
     }
 }
