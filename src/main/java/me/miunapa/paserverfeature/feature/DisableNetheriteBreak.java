@@ -1,6 +1,9 @@
 package me.miunapa.paserverfeature.feature;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,6 +13,8 @@ import me.miunapa.paserverfeature.SubFeature;
 import net.md_5.bungee.api.ChatColor;
 
 public class DisableNetheriteBreak extends SubFeature implements Listener {
+
+    List<Location> placeList = new ArrayList<Location>();
 
     public DisableNetheriteBreak() {
         super("DisableNetheriteBreak");
@@ -27,8 +32,17 @@ public class DisableNetheriteBreak extends SubFeature implements Listener {
         if (event.getBlock().getWorld().getName().equals("world_nether")
                 && event.getBlock().getType() == Material.ANCIENT_DEBRIS
                 && event.getPlayer().getGameMode() == GameMode.SURVIVAL) {
-            event.getPlayer().sendMessage(ChatColor.RED + "本伺服的地獄不可挖掘遠古遺骸! 請至資源服挖掘");
-            event.setDropItems(false);
+            Location loc = event.getBlock().getLocation();
+            if (placeList.contains(loc)) {
+                event.getPlayer()
+                        .sendMessage(ChatColor.RED + "此位置遠古遺骸被挖掘了 將無法再次挖掘 " + ChatColor.GRAY + "x:"
+                                + loc.getBlockX() + " y:" + loc.getBlockY() + " z:"
+                                + loc.getBlockZ());
+                placeList.remove(loc);
+            } else {
+                event.getPlayer().sendMessage(ChatColor.RED + "本伺服的地獄不可挖掘遠古遺骸! 請至資源服挖掘");
+                event.setDropItems(false);
+            }
         }
     }
 
@@ -37,7 +51,10 @@ public class DisableNetheriteBreak extends SubFeature implements Listener {
         if (event.getBlock().getWorld().getName().equals("world_nether")
                 && event.getBlock().getType() == Material.ANCIENT_DEBRIS
                 && event.getPlayer().getGameMode() == GameMode.SURVIVAL) {
-            event.getPlayer().sendMessage(ChatColor.RED + "本伺服的地獄不可放下遠古遺骸! 請別在地獄放");
+            Location loc = event.getBlock().getLocation();
+            placeList.add(loc);
+            event.getPlayer().sendMessage(ChatColor.RED + "本位置暫時可挖掘遠古遺骸 " + ChatColor.GRAY + "x:"
+                    + loc.getBlockX() + " y:" + loc.getBlockY() + " z:" + loc.getBlockZ());
             event.setCancelled(true);
         }
     }
