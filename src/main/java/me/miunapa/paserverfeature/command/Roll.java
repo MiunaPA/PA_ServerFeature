@@ -96,13 +96,13 @@ public class Roll extends SubFeature implements CommandExecutor {
                 }
             }
             String numberText = "";
-            Integer sum = 0;
+            long sum = 0;
             for (int i = 0; i < repeat; i++) {
                 Integer number = getRandom(min, max);
                 numberText += number.toString() + " ";
                 sum += number;
             }
-            numberText += " (" + sum.toString() + ")";
+            numberText += " (" + String.valueOf(sum) + ")";
             TextComponent tc = new TextComponent(ChatColor.GREEN + player.getName() + ChatColor.GOLD
                     + " 骰出了 " + ChatColor.LIGHT_PURPLE + numberText);
             HoverEvent hoverEvent = new HoverEvent(Action.SHOW_TEXT, createContentText(""));
