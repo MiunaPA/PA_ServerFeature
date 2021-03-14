@@ -41,6 +41,7 @@ public class Main extends JavaPlugin {
         features.add(new SpawnerChange());
         features.add(new StrippedLog());
         features.add(new TurtleCount());
+        features.add(new UHCPresent());
         features.add(new WitherDispense());
         // player
         features.add(new PlayerDeath());
